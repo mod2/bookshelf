@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% block main %}
+
+<ul class="booklist">
+	<h1 class="container">{{ folder.name }}</h1>
+
+{% for reading in folder.readings.all %}
+	<li class="container">{% include '_reading.html' %}</li>
+{% endfor %}
+</ul>
+
+{% endblock main %}
+
+{% block modal %}
+<form id="add-entry-modal">
+	<input type="number" pattern="\d*" class="currententry" value="{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% endif %}" maxlength="4" data-reading-id="{{ reading.id }}">
+</form>
+{% endblock %}

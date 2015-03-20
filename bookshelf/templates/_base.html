@@ -1,0 +1,82 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% if title %}{{ title }} — {% endif %}Bookshelf</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic' rel='stylesheet' type='text/css'>
+	<link href="{% static 'style.css' %}" type="text/css" rel="stylesheet">
+
+	<link rel="shortcut icon" href="{% static 'favicon.ico' %}?v=1">
+	<link rel="shortcut icon" href="{% static 'favicon.png' %}?v=1">
+
+	<script src="{% static 'jquery-2.1.1.min.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'jquery.autosize.min.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'jquery-ui.min.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'bookshelf.js' %}" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="wrapper">
+		{% block menu %}
+		<nav role="menu">
+			<div class="folder">
+				<a href="{% url 'current' %}"{% if folder.slug == "current" %}class="selected"{% endif %}>
+					<h2>Current Books</h2>
+				</a>
+			</div>
+
+			{% for f in folders %}
+			<div class="folder">
+				<a href="{% url 'folder' f.slug %}"{% if folder and f.slug == folder.slug %}class="selected"{% endif %}>
+					<h2>{{ f.name }}</h2>
+					<h3>{{ f.readings.all|length }} book{% if f.readings.all|length != 1 %}s{% endif %}</h3>
+				</a>
+			</div>
+			{% endfor %}
+
+			{% if folderless %}
+			<div class="folder">
+				<a href="{% url 'folder' %}"{% if folder.slug == "folderless" %}class="selected"{% endif %}>
+					<h2>Unsorted Books</h2>
+					<h3>{{ folderless|length }}</h3>
+				</a>
+			</div>
+			{% endif %}
+
+			{% if request.user %}
+			<div class="folder system">
+				<a href="">Account</a>
+				<a href="{% url 'logout' %}">Logout</a>
+			</div>
+			{% endif %}
+		</nav>
+		{% endblock menu %}
+
+		<section id="page">
+			<div class="mask"></div>
+			{% block header %}
+			<header role="banner">
+				<a class="menu">&hellip;</a>
+				<h1><a class="home" href="{% url 'dashboard' %}">Bookshelf</a></h1>
+			</header>
+			{% endblock header %}
+
+			<main id="content">
+				<div class="content container">
+					{% block main %}{% endblock main %}
+				</div>
+			</main>
+		</section>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal-background"></div>
+	<div class="modal">
+		{% block modal %}
+		{% endblock modal %}
+	</div>
+</body>
+</html>

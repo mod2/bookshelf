@@ -1,0 +1,360 @@
+* {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: Source Sans Pro, Helvetica, Arial;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.content .container {
+	max-width: 500px;
+	padding: 0 15px;
+}
+
+
+/* Page header */
+/* -------------------------------------------------- */
+
+header[role=banner] {
+	background: #07080a;
+	overflow: hidden;
+}
+
+header[role=banner] h1 {
+	color: hsl(208, 42%, 63%);
+	font-size: 1em;
+	font-weight: 400;
+	left: 60px;
+	letter-spacing: 0.04em;
+	margin: 0;
+	overflow: hidden;
+	position: absolute;
+	right: 60px;
+	text-align: center;
+	text-transform: uppercase;
+	z-index: 50000;
+}
+
+header[role=banner] h1 a.home {
+	color: #fff;
+	display: block;
+	padding-top: .5em;
+	padding-bottom: .5em;
+	text-decoration: none;
+}
+
+header[role=banner] a:hover {
+	color: hsl(48, 81%, 74%) !important;
+}
+
+header[role=banner] a.menu {
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+	font-size: 1.3em;
+	height: 100%;
+	line-height: 100%;
+	padding: .1em .5em .7em;
+	z-index: 100000;
+}
+
+
+/* Navigation */
+/* -------------------------------------------------- */
+
+nav[role=menu] {
+	-moz-transition: -moz-transform .15s cubic-bezier(0.2, 0.3, 0.25, 0.9);
+	-o-transition: -o-transform .15s cubic-bezier(0.2, 0.3, 0.25, 0.9);
+	-webkit-transition: -webkit-transform .15s cubic-bezier(0.2, 0.3, 0.25, 0.9);
+	transition: transform .15s cubic-bezier(0.2, 0.3, 0.25, 0.9);
+
+	-webkit-overflow-scrolling: touch;
+
+	-moz-transform: translate3d(-200px, 0, 0);
+	-ms-transform: translate3d(-200px, 0, 0);
+	-o-transform: translate3d(-200px, 0, 0);
+	-webkit-transform: translate3d(-200px, 0, 0);
+	transform: translate3d(-200px, 0, 0);
+
+	background: #20283c;
+	bottom: 0;
+	float: left;
+	left: 0;
+	overflow-y: scroll;
+	overflow: hidden;
+	padding-bottom: 1em;
+	padding-top: 1em;
+	position: fixed;
+	text-align: right;
+	top: 0;
+	width: 200px;
+	z-index: 0;
+}
+
+nav[role=menu] a {
+	color: #fff;
+	display: block;
+	padding: 15px 20px;
+	text-decoration: none;
+}
+
+nav[role=menu] a.selected {
+	background: rgba(0, 0, 0, 0.2);
+}
+
+nav[role=menu] a:hover {
+	background: rgba(0, 0, 0, 0.1);
+	color: #fff;
+}
+
+nav[role=menu] h2 {
+	font-size: 1.2em;
+	font-weight: 400;
+	margin: 0;
+}
+
+nav[role=menu] h3 {
+	color: #6c8098;
+	font-size: .8em;
+	font-style: italic;
+	font-weight: 400;
+	margin: 3px 0 0;
+}
+
+nav[role=menu] .folder.system {
+	font-size: .85em;
+	margin-top: 1.5em;
+}
+
+nav[role=menu] .folder.system a {
+	color: #8ca7b5;
+}
+
+body.active-nav nav[role=menu] {
+	-moz-transform: translate3d(0, 0, 0);
+	-ms-transform: translate3d(0, 0, 0);
+	-o-transform: translate3d(0, 0, 0);
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+body.active-nav #page {
+	-moz-transform: translate3d(200px, 0, 0);
+	-ms-transform: translate3d(200px, 0, 0);
+	-o-transform: translate3d(200px, 0, 0);
+	-webkit-transform: translate3d(200px, 0, 0);
+	transform: translate3d(200px, 0, 0);
+	box-shadow: -1px 0 25px rgba(0, 0, 0, 0.5);
+	bottom: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+body.active-nav #page .mask {
+	bottom: 0;
+	cursor: pointer;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 50000;
+}
+
+
+/* Books */
+/* -------------------------------------------------- */
+
+.content h1 {
+	color: #888;
+	font-size: 1.3em;
+	font-weight: 400;
+}
+
+.content h2 {
+	color: #5278b2;
+	font-size: 1.1em;
+	margin: 0 0 .75em;
+	padding-top: .25em;
+}
+
+.content .folder {
+	max-width: 500px;
+}
+
+.content .folder + .folder {
+	border-top: solid 1px #ddd;
+	margin-top: 2em;
+	padding-top: 1.25em;
+}
+
+ul.booklist {
+	margin: 0;
+	padding: 0;
+}
+
+ul.booklist li {
+	list-style: none;
+	overflow: hidden;
+	padding: 0;
+}
+
+ul.booklist li + li {
+	margin-top: 1.25em;
+}
+
+ul.booklist li a {
+	color: #444;
+	text-decoration: none;
+}
+
+ul.booklist li a span.label {
+	font-size: 1.2em;	
+	font-weight: 600;
+	line-height: 1.1em;
+}
+
+ul.booklist li .entry {
+	background: #e1efd0;
+	border-radius: 3px;
+	color: #426719;
+	float: right;
+	font-weight: 600;
+	margin-left: 15px;
+	text-align: center;
+	width: 4.5em;
+}
+
+ul.booklist li .entry .page_number {
+	border-radius: 3px 3px 0 0;
+	font-size: 1.4em;
+	padding: 8px 10px;
+}
+
+ul.booklist li .entry .sub {
+	background: rgba(255, 255, 255, 0.6);
+	border-radius: 0 0 3px 3px;
+	color: #7d91b6;
+	font-size: .7em;
+	font-style: italic;
+	line-height: 1.1em;
+	padding: 5px 10px 6px;
+}
+
+ul.booklist li .entry .sub .label {
+	font-size: .8em;
+	line-height: 1.1em;
+}
+
+ul.booklist li .entry .sub .left .pages,
+ul.booklist li .entry .sub .left .total {
+	color: #b4c1da;
+	padding: 0 1px;
+}
+
+ul.booklist li .info {
+	color: #888;
+	display: block;
+	font-size: .8em;
+	margin-top: 3px;
+}
+
+ul.booklist li .info .num {
+	color: #555;
+	font-weight: 600;
+}
+
+ul.booklist li .info .num span {
+	color: #888;
+	font-size: .8em;
+	font-weight: 400;
+	margin-left: 1px;
+}
+
+
+/* Percentage */
+/* -------------------------------------------------- */
+
+.percentage {
+	background: #eee;
+	border-radius: 3px;
+	display: block;
+	margin-top: 6px;
+	width: 100px;
+	height: 10px;
+}
+
+.percentage .bar {
+	background: #444;
+	border-radius: 3px 0 0 3px;
+	display: block;
+	height: 10px;
+}
+
+
+@media screen and (min-width: 700px) {
+	header[role=banner] {
+		background: none !important;
+		font-size: .9em;
+		left: 0px;
+		padding-right: 20px;
+		position: absolute;
+		text-align: right;
+		top: 66px;
+		width: 300px;
+	}
+
+	header[role=banner] h1 {
+		position: initial;
+		text-align: right;
+	}
+
+	header[role=banner] h1 a {
+		padding-top: 60px;
+	}
+
+	header[role=banner] h1 a.home {
+		color: #8ca7b5;
+	}
+
+	header[role=banner] a.menu {
+		display: none;
+	}
+
+	nav[role=menu] {
+		-moz-transition: none;
+		-o-transition: none;
+		-webkit-transition: none;
+		transition: none;
+		-moz-transform: none;
+		-ms-transform: none;
+		-o-transform: none;
+		-webkit-transform: none;
+		transform: none;
+		border: none;
+		bottom: 0px;
+		display: block;
+		left: 0px;
+		margin-bottom: 0;
+		overflow: hidden;
+		padding-top: 110px;
+		position: absolute;
+		top: 0px;
+		width: 300px;
+	}
+
+	main#content {
+		font-size: 1.1em;
+		margin-left: 360px;
+		margin-top: 0;
+	}
+
+	main#content .content {
+		padding-right: 50px;
+		padding-top: 50px;
+	}
+}

@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% block main %}
+<h1 class="container">Current Books</h1>
+
+{% for folder in folders %}
+{% if folder.readings.all %}
+<div class="folder">
+	<h2 class="container">{{ folder.name }}</h2>
+	<ul class="booklist">
+	{% for reading in folder.readings.all %}
+		<li class="container">{% include '_reading.html' %}</li>
+	{% endfor %}
+	</ul>
+</div>
+{% endif %}
+{% endfor %}
+
+{% endblock main %}
