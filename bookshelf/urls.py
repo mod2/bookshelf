@@ -7,10 +7,13 @@ urlpatterns = patterns('',
     url(r'^login/', 'django.contrib.auth.views.login', { 'template_name': 'login.html' }, name='login'),
     url(r'^logout/', 'django.contrib.auth.views.logout', { 'template_name': 'logout.html', 'next_page': '/login/' }, name='logout'),
 
+    url(r'^book/(.+?)/edit/$', 'bookshelf.views.edit_book', name='edit_book'),
     url(r'^book/(.+?)/$', 'bookshelf.views.book', name='book'),
     url(r'^folder/(.+?)/$', 'bookshelf.views.folder', name='folder'),
     url(r'^current/$', 'bookshelf.views.current', name='current'),
     url(r'^$', 'bookshelf.views.dashboard', name='dashboard'),
+
+    url(r'^add/$', 'bookshelf.views.add_book', name='add_book'),
 
     # Web services
     #url(r'^api/book/(.+?)/reorder-scenes/$', 'storybook.views.ws_reorder_scenes', name='ws_reorder_scenes'),

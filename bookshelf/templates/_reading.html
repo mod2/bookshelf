@@ -13,5 +13,5 @@
 		<span class="bar" style="width: {{ reading.percentage }}%;"></span>
 	</span>
 
-	<span class="info"><span class="num">{{ reading.percentage|floatformat:"0" }}<span>%</span></span> ({{ reading.days_elapsed }} days)</span>
+	<span class="info"><span class="num">{{ reading.percentage|floatformat:"0" }}<span>%</span></span> — {{ reading.days_elapsed }} days</span>
 </a>

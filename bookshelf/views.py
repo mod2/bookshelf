@@ -57,3 +57,23 @@ def folder(request, folder_slug):
                                               'folders': folders,
                                               'folderless': folderless,
                                               'request': request })
+
+@login_required
+def add_book(request):
+    folders = Folder.objects.filter(owner=request.user)
+    folderless = Reading.objects.filter(owner=request.user, folder=None)
+
+    return render_to_response('book.html', {'folders': folders,
+                                            'folderless': folderless,
+                                            'request': request })
+
+@login_required
+def edit_book(request, book_slug):
+    book = Book.objects.get(slug=book_slug)
+    folders = Folder.objects.filter(owner=request.user)
+    folderless = Reading.objects.filter(owner=request.user, folder=None)
+
+    return render_to_response('book.html', {'book': book,
+                                            'folders': folders,
+                                            'folderless': folderless,
+                                            'request': request })
