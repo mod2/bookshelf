@@ -3,6 +3,16 @@
 {% block main %}
 <h1 class="container">Current Books</h1>
 
+{% if folderless %}
+<div class="folder">
+	<ul class="booklist">
+	{% for reading in folderless %}
+		<li class="container">{% include '_reading.html' %}</li>
+	{% endfor %}
+	</ul>
+</div>
+{% endif %}
+
 {% for folder in folders %}
 {% if folder.readings.all %}
 <div class="folder">

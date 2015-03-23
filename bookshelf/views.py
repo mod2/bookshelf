@@ -67,6 +67,7 @@ def add_book(request):
                                             'folderless': folderless,
                                             'request': request })
 
+
 @login_required
 def edit_book(request, book_slug):
     book = Book.objects.get(slug=book_slug)
