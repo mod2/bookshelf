@@ -23,6 +23,11 @@
 		{% block menu %}
 		<nav role="menu">
 			{% if request.user %}
+			<div class="search">
+				<input type="text" />
+				<button type="submit" value="Search"><object type="image/svg+xml" data="{% static 'search.svg' %}">Search</object></button>
+			</div>
+
 			<div class="folder">
 				<a href="{% url 'current' %}"{% if folder.slug == "current" %}class="selected"{% endif %}>
 					<h2>Current Books</h2>

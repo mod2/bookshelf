@@ -667,6 +667,50 @@ form#add-book-form input[name=author] {
 }
 
 
+/* Search */
+/* -------------------------------------------------- */
+
+.search {
+	margin-bottom: 1.5em;
+	padding: 0 20px;
+}
+
+.search input[type=text] {
+	background: rgba(0, 0, 0, 0.2);
+	border: none;
+	border-radius: 2px;
+	color: #fff;
+	font-size: 1em;
+	padding: 4px 6px 5px;
+	width: 120px;
+}
+
+.search input[type=text]:focus {
+	outline: none;
+}
+
+.search button {
+	-webkit-appearance: none;
+	background: none;
+	border: none;
+	color: #6c8098;
+	cursor: pointer;
+	font-size: 1em;
+	padding: 4px 8px 5px;
+}
+
+.search button object {
+	height: .8em;
+	margin: 2px 0 0;
+	width: .8em;
+}
+
+.search button:hover {
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 2px;
+}
+
+
 @media screen and (min-width: 700px) {
 	header[role=banner] {
 		background: none !important;
