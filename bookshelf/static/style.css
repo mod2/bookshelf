@@ -535,20 +535,6 @@ form.modal#add-entry-modal input[type=number] {
 	width: 4em;
 }
 
-form.modal#add-entry-modal input[type=number]:focus {
-	outline: none;
-}
-
-form.modal#add-entry-modal input[type=number]::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-form.modal#add-entry-modal input[type=number]::-webkit-outer-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-}
-
 form.modal#add-entry-modal .comment label {
 	color: #a5b8c7;
 	font-size: .8em;
@@ -578,33 +564,49 @@ form.modal#add-entry-modal .modal-group.save input[type=submit] {
 }
 
 
-/* Login page */
+/* On-page forms */
+/* -------------------------------------------------- */
 
-form.login {
-	margin-top: 1em;
-}
-
-form.login .group label {
+form .group label {
 	color: #888;
 	display: block;
 	margin-bottom: .2em;
 }
 
-form.login .group section {
+form .group section {
 	margin-bottom: 1em;
 }
 
-form.login .group section input[type=text] {
-	font-size: 1.3em;
-	padding: 3px 5px;
+form .group input[type=text], form .group input[type=number], form .group input[type=password] {
+	border: solid 1px #bbb;
+	border-radius: 2px;
+	font-size: 1.2em;
+	padding: 4px 6px;
 }
 
-form.login .group section input[type=password] {
-	font-size: 1.3em;
-	padding: 3px 5px;
+form .group input[type=text]:focus, form .group input[type=number]:focus, form .group input[type=password]:focus {
+	outline: none;
 }
 
-form.login input.button {
+form .group input[type=number] {
+	width: 3em;
+}
+
+form .group input[type=number]:focus {
+	outline: none;
+}
+
+form .group input[type=number]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+form .group input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+form input.button {
 	background: #6392c8;
 	border: none;
 	border-radius: 5px;
@@ -614,8 +616,54 @@ form.login input.button {
 	padding: 4px 10px 6px;
 }
 
-form.login input.button:hover {
+form input.button:hover {
 	background: #444;
+}
+
+form .group.optional {
+	border-top: solid 1px #ddd;
+	font-size: .8em;
+	margin-top: 3em !important;
+	padding-top: 2em;
+}
+
+form .group.optional label {
+	color: #999;
+}
+
+form .group.optional input[type=text],
+form .group.optional input[type=number],
+form .group.optional input[type=password] {
+	font-size: .9em;
+	padding: 1px 3px 2px;
+}
+
+form .group.optional input[type=number] {
+	width: 2.25em;
+}
+
+
+/* Login page */
+/* -------------------------------------------------- */
+
+form.login {
+	margin-top: 1em;
+}
+
+
+/* Add book */
+/* -------------------------------------------------- */
+
+form#add-book-form .group + .group {
+	margin-top: .75em;
+}
+
+form#add-book-form input[name=title] {
+	width: 100%;
+}
+
+form#add-book-form input[name=author] {
+	width: 80%;
 }
 
 

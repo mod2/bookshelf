@@ -63,7 +63,7 @@ def add_book(request):
     folders = Folder.objects.filter(owner=request.user)
     folderless = Reading.objects.filter(owner=request.user, folder=None)
 
-    return render_to_response('book.html', {'folders': folders,
+    return render_to_response('add.html', {'folders': folders,
                                             'folderless': folderless,
                                             'request': request })
 
