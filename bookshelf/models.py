@@ -79,7 +79,7 @@ class Reading(models.Model):
         return 5
 
     class Meta:
-        ordering = ['started_date']
+        ordering = ['order', 'started_date']
 
 
 class Entry(models.Model):
@@ -106,6 +106,9 @@ class Folder(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['order']
 
 
 class Tag(models.Model):

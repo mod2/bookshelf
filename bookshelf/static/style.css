@@ -125,17 +125,28 @@ nav[role=menu] h3 {
 	margin: 3px 0 0;
 }
 
-nav[role=menu] .folder.system {
+nav[role=menu] .system {
 	font-size: .85em;
-	margin-top: 1.5em;
+	margin-top: 2.5em;
 }
 
-nav[role=menu] .folder.system a {
+nav[role=menu] .system a {
 	color: #8ca7b5;
+	padding: 6px 20px;
 }
 
-nav[role=menu] .folder.system a.add-book {
+nav[role=menu] .system a.add-book {
 	color: #a2bb87;
+}
+
+nav[role=menu] .folder.placeholder {
+	background: #111;
+	height: 4em;
+}
+
+nav[role=menu] .folder.ui-sortable-helper {
+	background: rgba(0, 0, 0, 0.7);
+	border-radius: 5px;
 }
 
 body.active-nav nav[role=menu] {
@@ -202,6 +213,7 @@ ul.booklist {
 }
 
 ul.booklist li {
+	background: #fff;
 	list-style: none;
 	overflow: hidden;
 	padding: 0;
@@ -280,6 +292,30 @@ ul.booklist li .info .num span {
 ul.booklist li .entry:hover .page_number {
 	background: #e4f0ca;
 	color: #4b690e;
+}
+
+ul.booklist li.placeholder {
+	background: #eee;
+	height: 3em;
+}
+
+ul.booklist li.ui-sortable-helper {
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+	padding: 10px;
+}
+
+ul.booklist li.ui-sortable-helper .entry {
+	display: none;
+}
+
+ul.booklist li.ui-sortable-helper .percentage {
+	display: none;
+}
+
+ul.booklist li.ui-sortable-helper .info {
+	display: none;
 }
 
 
@@ -488,6 +524,7 @@ form.modal#add-entry-modal h2 {
 }
 
 form.modal#add-entry-modal input[type=number] {
+	-moz-appearance: textfield;
 	background: rgba(0, 0, 0, 0.4);
 	border: none;
 	border-radius: 3px;
@@ -500,6 +537,16 @@ form.modal#add-entry-modal input[type=number] {
 
 form.modal#add-entry-modal input[type=number]:focus {
 	outline: none;
+}
+
+form.modal#add-entry-modal input[type=number]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+form.modal#add-entry-modal input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 form.modal#add-entry-modal .comment label {
@@ -528,6 +575,47 @@ form.modal#add-entry-modal .modal-group.save {
 form.modal#add-entry-modal .modal-group.save input[type=submit] {
 	float: right;
 	margin-top: 0;
+}
+
+
+/* Login page */
+
+form.login {
+	margin-top: 1em;
+}
+
+form.login .group label {
+	color: #888;
+	display: block;
+	margin-bottom: .2em;
+}
+
+form.login .group section {
+	margin-bottom: 1em;
+}
+
+form.login .group section input[type=text] {
+	font-size: 1.3em;
+	padding: 3px 5px;
+}
+
+form.login .group section input[type=password] {
+	font-size: 1.3em;
+	padding: 3px 5px;
+}
+
+form.login input.button {
+	background: #6392c8;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	cursor: pointer;
+	font-size: 1em;
+	padding: 4px 10px 6px;
+}
+
+form.login input.button:hover {
+	background: #444;
 }
 
 

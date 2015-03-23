@@ -22,35 +22,32 @@
 	<div class="wrapper">
 		{% block menu %}
 		<nav role="menu">
+			{% if request.user %}
 			<div class="folder">
 				<a href="{% url 'current' %}"{% if folder.slug == "current" %}class="selected"{% endif %}>
 					<h2>Current Books</h2>
 				</a>
 			</div>
 
-			{% for f in folders %}
-			<div class="folder">
-				<a href="{% url 'folder' f.slug %}"{% if folder and f.slug == folder.slug %}class="selected"{% endif %}>
-					<h2>{{ f.name }}</h2>
-					<h3>{{ f.readings.all|length }} book{% if f.readings.all|length != 1 %}s{% endif %}</h3>
-				</a>
+			<div class="folders">
+				{% for f in folders %}
+				<div class="folder" data-slug="{{ f.slug }}">
+					<a href="{% url 'folder' f.slug %}"{% if folder and f.slug == folder.slug %}class="selected"{% endif %}>
+						<h2>{{ f.name }}</h2>
+						<h3>{{ f.readings.all|length }} book{% if f.readings.all|length != 1 %}s{% endif %}</h3>
+					</a>
+				</div>
+				{% endfor %}
 			</div>
-			{% endfor %}
 
-			{% if folderless %}
-			<div class="folder">
-				<a href="{% url 'folder' %}"{% if folder.slug == "folderless" %}class="selected"{% endif %}>
-					<h2>Unsorted Books</h2>
-					<h3>{{ folderless|length }}</h3>
-				</a>
-			</div>
-			{% endif %}
-
-			<div class="folder system">
+			<div class="system">
 				<a class="add-book" href="{% url 'add_book' %}">+ Add Book</a>
+				<a href="">Stats</a>
+				<a href="">History</a>
 				<a href="">Account</a>
 				<a href="{% url 'logout' %}">Logout</a>
 			</div>
+			{% endif %}
 		</nav>
 		{% endblock menu %}
 
@@ -58,7 +55,7 @@
 			<div class="mask"></div>
 			{% block header %}
 			<header role="banner">
-				<a class="menu">&hellip;</a>
+				{% if request.user %}<a class="menu">&hellip;</a>{% endif %}
 				<h1><a class="home" href="{% url 'dashboard' %}">Bookshelf</a></h1>
 			</header>
 			{% endblock header %}

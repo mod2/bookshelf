@@ -77,3 +77,35 @@ def edit_book(request, book_slug):
                                             'folders': folders,
                                             'folderless': folderless,
                                             'request': request })
+
+def api_folder_update_order(request):
+    order = request.GET.get('order', '')
+    slug_list = order.split(',')
+
+    try:
+        for s, folder_slug in enumerate(slug_list):
+            folder_slug = slug_list[s]
+            folder = Folder.objects.get(slug=folder_slug)
+            folder.order = s
+            folder.save()
+        response = { 'status': 200 }
+    except:
+        response = { 'status': 500, 'message': "Couldn't update orders" }
+
+    return JsonResponse(response)
+
+def api_reading_update_order(request):
+    order = request.GET.get('order', '')
+    id_list = order.split(',')
+
+    try:
+        for i, reading_id in enumerate(id_list):
+            reading_id = id_list[i]
+            reading = Reading.objects.get(id=reading_id)
+            reading.order = i
+            reading.save()
+        response = { 'status': 200 }
+    except:
+        response = { 'status': 500, 'message': "Couldn't update orders" }
+
+    return JsonResponse(response)
