@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     url(r'^book/(.+?)/edit/$', 'bookshelf.views.edit_book', name='edit_book'),
     url(r'^book/(.+?)/$', 'bookshelf.views.book', name='book'),
     url(r'^folder/(.+?)/$', 'bookshelf.views.folder', name='folder'),
-    url(r'^current/$', 'bookshelf.views.current', name='current'),
     url(r'^$', 'bookshelf.views.dashboard', name='dashboard'),
 
     url(r'^add/$', 'bookshelf.views.add_book', name='add_book'),

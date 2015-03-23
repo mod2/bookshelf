@@ -12,28 +12,17 @@ from datetime import datetime
 @login_required
 def dashboard(request):
     folders = Folder.objects.filter(owner=request.user)
-    folder = folders.first()
+    folder = {
+        'slug': 'dashboard',
+    }
+
 
     folderless = Reading.objects.filter(owner=request.user, folder=None)
 
-    return render_to_response('folder.html', {'folders': folders,
+    return render_to_response('dashboard.html', {'folders': folders,
                                               'folder': folder,
                                               'folderless': folderless,
                                               'request': request })
-
-@login_required
-def current(request):
-    folders = Folder.objects.filter(owner=request.user)
-    folder = {
-        'slug': 'current',
-    }
-
-    folderless = Reading.objects.filter(owner=request.user, folder=None)
-
-    return render_to_response('current.html', {'folders': folders,
-                                           'folder': folder,
-                                           'folderless': folderless,
-                                           'request': request })
 
 @login_required
 def book(request, book_slug):

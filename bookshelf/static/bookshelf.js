@@ -116,6 +116,7 @@ $(document).ready(function() {
 			data: data,
 			success: function(data) {
 				console.log("success", data);
+				window.location.href = "/";
 			},
 			error: function(data) {
 				console.log("Error! :(", data);
