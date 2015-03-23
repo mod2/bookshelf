@@ -96,6 +96,34 @@ $(document).ready(function() {
 			});
 		},
 	});
+
+
+	// Adding a book
+	$("#add-book-form").on("submit", function() {
+		var starting_page = $(this).find("input[name=starting_page]").val().trim();
+		starting_page = (starting_page != '') ? parseInt(starting_page) : 1;
+
+		data = {
+			title: $(this).find("input[name=title]").val().trim(),
+			author: $(this).find("input[name=author]").val().trim(),
+			num_pages: parseInt($(this).find("input[name=num_pages]").val().trim()),
+			starting_page: starting_page,
+		};
+
+		$.ajax({
+			url: '/add/',
+			method: 'POST',
+			data: data,
+			success: function(data) {
+				console.log("success", data);
+			},
+			error: function(data) {
+				console.log("Error! :(", data);
+			},
+		});
+
+		return false;
+	});
 });
 
 
