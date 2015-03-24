@@ -29,7 +29,12 @@ $(document).ready(function() {
 		if ($("#add-entry-modal:visible").length == 0) {
 			// On click, populate the dialog and pull it up
 			var book = $(this).parents("li:first");		
-			var readingId = book.attr("data-reading-id");
+			if (book.length > 0) {
+				var readingId = book.attr("data-reading-id");
+			} else {
+				var readingId = $(".detail.info").attr("data-reading-id");
+			}
+
 			var currentPageNumber = $(this).find(".page_number");
 			var endPage = $(this).find(".total").html();
 			var title = book.find(".title").html();
@@ -71,7 +76,11 @@ $(document).ready(function() {
 				data: data,
 				success: function(data) {
 					// Update the entry
-					var reading = $("ul.booklist li[data-reading-id=" + data.reading_id + "]");
+					if ($("ul.booklist").length) {
+						var reading = $("ul.booklist li[data-reading-id=" + data.reading_id + "]");
+					} else {
+						var reading = $(".detail.info");
+					}
 					reading.find(".info .num").html(data.percentage);
 					reading.find(".percentage .bar").css("width", data.percentage + "%");
 					reading.find(".entry .page_number").html(data.page_number);
@@ -180,8 +189,15 @@ $(document).ready(function() {
 		return false;
 	});
 
+	// Hotkey to go home
+	$(document).bind('keypress', 'h', function() {
+		window.location.href = '/';
+
+		return false;
+	});
+
 	// See if we're on a page with charts
-	if ($(".chart-wrapper")) {
+	if ($(".chart-wrapper").length && data.list) {
 		var margin = {
 			top: 10,
 			right: 20,

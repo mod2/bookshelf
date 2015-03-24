@@ -1,7 +1,8 @@
 {% extends '_base.html' %}
 
 {% block main %}
-<section class="detail info container"> <div class="entry">
+<section class="detail info container" data-reading-id="{{ reading.id }}">
+	<div class="entry">
 		<section class="page_number">{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% else %}—{% endif %}</section>
 		<section class="sub">
 			<span class="left"><span class="pages">{{ reading.pages_left }}</span> of <span class="total">{{ reading.end_page }}</span></span>
@@ -23,24 +24,26 @@
 
 	<div class="group">
 		<h3>Start Date</h3>
-		<p>{{ reading.started_date }}</p>
+		<p>{{ reading.started_date }}{% if not reading.finished_date %} <span>({{ reading.started_date|timesince }} ago)</span>{% endif %}</p>
 	</div>
 
-	{% if reading.end_date %}
+	{% if reading.finished_date %}
 	<div class="group">
 		<h3>Finished Date</h3>
-		<p>{{ reading.end_date }}</p>
+		<p>{{ reading.finished_date }} <span>({{ reading.started_date|timesince:reading.finished_date }})</span></p>
 	</div>
 	{% endif %}
 </section>
 
+{% if reading.entries.all %}
 <section class="detail chart container">
 	<h3>Chart</h3>
 
 	<svg class="chart-wrapper book"></svg>
 </section>
+{% endif %}
 
-{% if reading.entries %}
+{% if reading.entries.all %}
 <section class="detail entries container">
 	<h3>Entries</h3>
 
@@ -65,6 +68,11 @@
 	</ul>	
 </section>
 {% endif %}
+
+<section class="detail edit container">
+	<a href="{% url 'admin:bookshelf_reading_change' reading.id %}" target="_new">Edit Reading</a>
+	<a href="{% url 'admin:bookshelf_book_change' book.id %}" target="_new">Edit Book</a>
+</section>
 
 {% endblock main %}
 

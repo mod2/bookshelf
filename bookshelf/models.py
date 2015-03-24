@@ -79,7 +79,7 @@ class Reading(models.Model):
 
     def days_elapsed(self):
         first_entry = self.entries.last()
-        #today = datetime.datetime.now()
+        today = datetime.datetime.now()
 
         # TODO: fix
         return 5
@@ -151,6 +151,9 @@ class Folder(models.Model):
 
     def __str__(self):
         return self.name
+
+    def active_readings(self):
+        return self.readings.filter(status='active')
 
     class Meta:
         ordering = ['order']

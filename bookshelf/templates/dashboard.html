@@ -14,11 +14,11 @@
 {% endif %}
 
 {% for folder in folders %}
-{% if folder.readings.all %}
+{% if folder.active_readings %}
 <div class="folder">
 	<h2 class="container">{{ folder.name }}</h2>
 	<ul class="booklist">
-	{% for reading in folder.readings.all %}
+	{% for reading in folder.active_readings.all %}
 		<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container">{% include '_reading.html' %}</li>
 	{% endfor %}
 	</ul>

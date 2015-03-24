@@ -6,7 +6,9 @@
 
 <ul class="booklist">
 {% for reading in folder.readings.all %}
+	{% if reading.status == 'active' %}
 	<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container">{% include '_reading.html' %}</li>
+	{% endif %}
 {% endfor %}
 </ul>
 

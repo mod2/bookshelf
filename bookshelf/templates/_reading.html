@@ -13,5 +13,5 @@
 		<span class="bar" style="width: {{ reading.percentage }}%;"></span>
 	</span>
 
-	<span class="info"><span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span> — {{ reading.days_elapsed }} days</span>
+	<span class="info"><span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span> — {{ reading.started_date|timesince }} ago</span>
 </a>

@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 
     url(r'^add/$', 'bookshelf.views.add_book', name='add_book'),
     url(r'^search/$', 'bookshelf.views.search', name='search'),
+    url(r'^history/$', 'bookshelf.views.history', name='history'),
 
     # Web services
     url(r'^api/folder/update-order/$', 'bookshelf.views.api_folder_update_order', name='api_folder_update_order'),
