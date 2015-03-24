@@ -524,25 +524,31 @@ form.modal#add-entry-modal h2 {
 	margin: 0;
 	margin-right: 8px;
 	position: relative;
-	top: -2px;
+	top: -5px;
 }
 
-form.modal#add-entry-modal input[type=number] {
+form.modal#add-entry-modal #entry-box {
 	-moz-appearance: textfield;
 	background: rgba(0, 0, 0, 0.4);
 	border: none;
 	border-radius: 3px;
 	color: #fff;
 	font-size: 1.4em;
-	margin: 8px 0;
+	margin: 8px 3px;
 	padding: 2px 6px;
-	width: 4em;
+	position: relative;
+	top: 5px;
+	width: 2.5em;
 }
 
 form.modal#add-entry-modal .comment label {
 	color: #a5b8c7;
 	font-size: .8em;
 	margin-bottom: 5px;
+}
+
+form.modal#add-entry-modal .comment label .title {
+	font-style: italic;
 }
 
 form.modal#add-entry-modal .comment textarea#comment {
@@ -589,14 +595,6 @@ form input[type=text], form input[type=number], form input[type=password] {
 }
 
 form input[type=text]:focus, form input[type=number]:focus, form input[type=password]:focus {
-	outline: none;
-}
-
-form input[type=number] {
-	width: 3em;
-}
-
-form input[type=number]:focus {
 	outline: none;
 }
 

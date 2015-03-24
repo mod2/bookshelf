@@ -17,11 +17,11 @@
 	<header class="modal-group">
 		<a class="cancel-link">Cancel</a>
 
-		<h2>Page:</h2> <input id="entry-box" type="number" pattern="\d*" value="{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% endif %}" maxlength="4" autofocus>
+		<h2>Page: <input id="entry-box" type="text" pattern="\d*" value="" maxlength="4" autofocus> of <span class="end-page">{{ reading.end_page }}</span></h2>
 	</header>
 
 	<div class="modal-group comment">
-		<label>Comment (optional)</label>
+		<label>Comment on <span class="title"></span></label>
 		<textarea id="comment"></textarea>
 	</div>
 

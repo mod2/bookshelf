@@ -31,16 +31,16 @@ $(document).ready(function() {
 			var book = $(this).parents("li:first");		
 			var readingId = book.attr("data-reading-id");
 			var currentPageNumber = $(this).find(".page_number");
+			var endPage = $(this).find(".total").html();
+			var title = book.find(".title").html();
 
 			$("#add-entry-modal").attr("data-reading-id", readingId);
-
-			if (currentPageNumber != "—") {
-				$("#add-entry-modal input[type=number]").val(currentPageNumber);
-			}
-
-			$("#entry-box").focus();
+			$("#add-entry-modal .end-page").html(endPage);
+			$("#add-entry-modal .title").html(title);
 
 			$("#add-entry-modal").slideDown(150);
+
+			$("#entry-box").focus();
 		}
 
 		return false;
@@ -70,8 +70,6 @@ $(document).ready(function() {
 				method: 'POST',
 				data: data,
 				success: function(data) {
-					console.log("success", data);
-
 					// Update the entry
 					var reading = $("ul.booklist li[data-reading-id=" + data.reading_id + "]");
 					reading.find(".info .num").html(data.percentage);
@@ -81,7 +79,7 @@ $(document).ready(function() {
 
 					// Close the modal and clear it
 					$("#add-entry-modal").slideUp(150);
-					$("#add-entry-modal input[type=number]").val('');
+					$("#add-entry-modal #entry-box").val('');
 					$("#add-entry-modal textarea#comment").val('');
 				},
 				error: function(data) {
