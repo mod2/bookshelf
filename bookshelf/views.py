@@ -30,7 +30,7 @@ def dashboard(request):
 
 @login_required
 def book(request, book_slug, reading_id):
-    book = Book.objects.get(slug=book_slug, owner=request.user)
+    book = Book.objects.filter(slug=book_slug, owner=request.user)[0]
     reading = Reading.objects.get(id=reading_id, owner=request.user)
 
     folders = Folder.objects.filter(owner=request.user)

@@ -1,7 +1,7 @@
 <div class="entry">
 	<section class="page_number">{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% else %}—{% endif %}</section>
 	<section class="sub">
-		<span class="left"><span class="pages">{{ reading.pages_left }}</span> of <span class="total">{{ reading.end_page }}</span></span>
+		<span class="left"><span class="pages">{{ reading.pages_left }}</span> of <span class="total" data-end-page="{{ reading.end_page }}">{{ reading.total_pages }}</span></span>
 		<span class="label">pages left</span>
 	</section>
 </div>

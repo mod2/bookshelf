@@ -36,7 +36,7 @@ $(document).ready(function() {
 			}
 
 			var currentPageNumber = $(this).find(".page_number");
-			var endPage = $(this).find(".total").html();
+			var endPage = $(this).find(".total").attr("data-end-page");
 			var title = book.find(".title").html();
 
 			$("#add-entry-modal").attr("data-reading-id", readingId);
@@ -192,6 +192,13 @@ $(document).ready(function() {
 	// Hotkey to go home
 	$(document).bind('keypress', 'h', function() {
 		window.location.href = '/';
+
+		return false;
+	});
+
+	// Hotkey to add a book
+	$(document).bind('keypress', 'a', function() {
+		window.location.href = '/add/';
 
 		return false;
 	});

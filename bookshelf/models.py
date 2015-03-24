@@ -55,6 +55,12 @@ class Reading(models.Model):
     def latest_entry(self):
         return self.entries.first()
 
+    def total_pages(self):
+        if self.end_page:
+            return self.end_page - (self.start_page - 1)
+        else:
+            return 0
+
     def current_page(self):
         latest_entry = self.latest_entry()
 
@@ -67,7 +73,7 @@ class Reading(models.Model):
 
     def percentage(self):
         if self.end_page:
-            return int((self.current_page() / self.end_page) * 100.0)
+            return int(((self.current_page() - (self.start_page - 1)) / self.total_pages()) * 100.0)
         else:
             return 0
 
@@ -99,6 +105,7 @@ class Reading(models.Model):
                 'finished_date': self.finished_date,
                 'start_page': self.start_page,
                 'end_page': self.end_page,
+                'total_pages': self.total_pages(),
                 'folder': {
                     'id': self.folder.id if self.folder else None,
                     'name': self.folder.name if self.folder else None,
