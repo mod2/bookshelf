@@ -78,6 +78,32 @@ class Reading(models.Model):
         # TODO: fix
         return 5
 
+    def to_dict(self):
+        try:
+            response = {
+                'book': {
+                    'id': self.book.id,
+                    'title': self.book.title,
+                    'author': self.book.author,
+                },
+                'owner': self.owner.id,
+                'status': self.status,
+                'started_date': self.started_date,
+                'goal_date': self.goal_date,
+                'finished_date': self.finished_date,
+                'start_page': self.start_page,
+                'end_page': self.end_page,
+                'folder': {
+                    'id': self.folder.id if self.folder else None,
+                    'name': self.folder.name if self.folder else None,
+                },
+                'tags': [t.name for t in self.tags.all()]
+            }
+        except Exception as e:
+            print(e)
+
+        return response
+
     class Meta:
         ordering = ['order', 'started_date']
 

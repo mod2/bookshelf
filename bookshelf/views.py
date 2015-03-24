@@ -4,10 +4,12 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render_to_response
+from django.db.models import Q
 
 from .models import Book, Reading, Folder
 
 from datetime import datetime
+import json
 
 @login_required
 def dashboard(request):
@@ -133,5 +135,25 @@ def api_reading_update_order(request):
         response = { 'status': 200 }
     except:
         response = { 'status': 500, 'message': "Couldn't update orders" }
+
+    return JsonResponse(response)
+
+def api_search(request):
+    query = request.GET.get('q', '')
+
+    if query != '':
+        try:
+            results = Reading.objects.filter(
+                Q(book__title__contains=query)
+                | Q(book__author__contains=query)
+            )
+
+            data = [r.to_dict() for r in results]
+
+            response = { 'status': 200, 'results': data }
+        except Exception as e:
+            response = { 'status': 500, 'message': "Bad query" }
+    else:
+        response = { 'status': 500, 'message': "Empty query" }
 
     return JsonResponse(response)
