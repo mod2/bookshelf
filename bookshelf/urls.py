@@ -13,9 +13,11 @@ urlpatterns = patterns('',
     url(r'^$', 'bookshelf.views.dashboard', name='dashboard'),
 
     url(r'^add/$', 'bookshelf.views.add_book', name='add_book'),
+    url(r'^search/$', 'bookshelf.views.search', name='search'),
 
     # Web services
     url(r'^api/folder/update-order/$', 'bookshelf.views.api_folder_update_order', name='api_folder_update_order'),
     url(r'^api/reading/update-order/$', 'bookshelf.views.api_reading_update_order', name='api_reading_update_order'),
+    url(r'^api/reading/add-entry/$', 'bookshelf.views.api_reading_add_entry', name='api_reading_add_entry'),
     url(r'^api/search/$', 'bookshelf.views.api_search', name='api_search'),
 )

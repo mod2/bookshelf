@@ -38,7 +38,7 @@ $(document).ready(function() {
 				$("#add-entry-modal input[type=number]").val(currentPageNumber);
 			}
 
-			$("#add-entry-modal input[type=number]").focus();
+			$("#entry-box").focus();
 
 			$("#add-entry-modal").slideDown(150);
 		}
@@ -48,6 +48,49 @@ $(document).ready(function() {
 
 	$(".modal .cancel-link").on("click", function() {
 		$(".modal").slideUp(150);
+	});
+
+
+	// Adding an entry
+	
+	$("form#add-entry-modal").on("submit", function() {
+		var pageNumber = parseInt($(this).find("#entry-box").val().trim());
+		var comment = $(this).find("textarea#comment").val().trim();
+		var readingId = parseInt($(this).attr("data-reading-id"));
+
+		if ((pageNumber || comment) && readingId) {
+			data = {
+				reading_id: readingId,
+				page_number: pageNumber,
+				comment: comment,
+			};
+
+			$.ajax({
+				url: '/api/reading/add-entry/',
+				method: 'POST',
+				data: data,
+				success: function(data) {
+					console.log("success", data);
+
+					// Update the entry
+					var reading = $("ul.booklist li[data-reading-id=" + data.reading_id + "]");
+					reading.find(".info .num").html(data.percentage);
+					reading.find(".percentage .bar").css("width", data.percentage + "%");
+					reading.find(".entry .page_number").html(data.page_number);
+					reading.find(".entry .sub .pages").html(data.pages_left);
+
+					// Close the modal and clear it
+					$("#add-entry-modal").slideUp(150);
+					$("#add-entry-modal input[type=number]").val('');
+					$("#add-entry-modal textarea#comment").val('');
+				},
+				error: function(data) {
+					console.log("Error! :(", data);
+				},
+			});
+		}
+
+		return false;
 	});
 
 

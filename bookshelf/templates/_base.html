@@ -23,10 +23,10 @@
 		{% block menu %}
 		<nav role="menu">
 			{% if request.user %}
-			<div class="search">
-				<input type="text" />
+			<form class="search" action="{% url 'search' %}" method="GET">
+				<input type="text" id="q" name="q" />
 				<button type="submit" value="Search"><object type="image/svg+xml" data="{% static 'search.svg' %}">Search</object></button>
-			</div>
+			</form>
 
 			<div class="folder">
 				<a href="{% url 'dashboard' %}"{% if folder.slug == "dashboard" %}class="selected"{% endif %}>

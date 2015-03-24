@@ -282,7 +282,7 @@ ul.booklist li .info .num {
 	font-weight: 600;
 }
 
-ul.booklist li .info .num span {
+ul.booklist li .info .percent-sign {
 	color: #e46286;
 	font-size: .8em;
 	font-weight: 400;
@@ -513,6 +513,10 @@ form.modal#add-entry-modal .cancel-link {
 	margin-top: 15px;
 }
 
+form.modal#add-entry-modal .cancel-link:hover {
+	color: #fff;
+}
+
 form.modal#add-entry-modal h2 {
 	color: #b7e1ff;
 	font-size: 1.2em;
@@ -577,31 +581,31 @@ form .group section {
 	margin-bottom: 1em;
 }
 
-form .group input[type=text], form .group input[type=number], form .group input[type=password] {
+form input[type=text], form input[type=number], form input[type=password] {
 	border: solid 1px #bbb;
 	border-radius: 2px;
 	font-size: 1.2em;
 	padding: 4px 6px;
 }
 
-form .group input[type=text]:focus, form .group input[type=number]:focus, form .group input[type=password]:focus {
+form input[type=text]:focus, form input[type=number]:focus, form input[type=password]:focus {
 	outline: none;
 }
 
-form .group input[type=number] {
+form input[type=number] {
 	width: 3em;
 }
 
-form .group input[type=number]:focus {
+form input[type=number]:focus {
 	outline: none;
 }
 
-form .group input[type=number]::-webkit-inner-spin-button {
+form input[type=number]::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
 
-form .group input[type=number]::-webkit-outer-spin-button {
+form input[type=number]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }

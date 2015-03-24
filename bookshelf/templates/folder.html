@@ -16,7 +16,8 @@
 <form id="add-entry-modal" class="modal padless">
 	<header class="modal-group">
 		<a class="cancel-link">Cancel</a>
-		<h2>Page:</h2> <input type="number" pattern="\d*" value="{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% endif %}" maxlength="4">
+
+		<h2>Page:</h2> <input id="entry-box" type="number" pattern="\d*" value="{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% endif %}" maxlength="4" autofocus>
 	</header>
 
 	<div class="modal-group comment">

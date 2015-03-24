@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render_to_response
 from django.db.models import Q
 
-from .models import Book, Reading, Folder
+from .models import Book, Reading, Entry, Folder
 
 from datetime import datetime
 import json
@@ -106,6 +106,26 @@ def edit_book(request, book_slug):
                                             'folderless': folderless,
                                             'request': request })
 
+@login_required
+def search(request):
+    query = request.GET.get('q', '')
+
+    folders = Folder.objects.filter(owner=request.user)
+    folderless = Reading.objects.filter(owner=request.user, folder=None)
+
+    if query != '':
+        results = Reading.objects.filter(
+            Q(book__title__contains=query)
+            | Q(book__author__contains=query)
+        )
+
+    return render_to_response('results.html', {'folders': folders,
+                                            'folderless': folderless,
+                                            'results': results,
+                                            'query': query,
+                                            'request': request })
+
+
 def api_folder_update_order(request):
     order = request.GET.get('order', '')
     slug_list = order.split(',')
@@ -135,6 +155,50 @@ def api_reading_update_order(request):
         response = { 'status': 200 }
     except:
         response = { 'status': 500, 'message': "Couldn't update orders" }
+
+    return JsonResponse(response)
+
+def api_reading_add_entry(request):
+    """ Add a new entry for a reading """
+
+    if request.method == 'POST':
+        try:
+            reading_id = int(request.POST.get('reading_id', -1))
+            page_number = int(request.POST.get('page_number', -1))
+            comment = request.POST.get('comment', '')
+
+            reading = Reading.objects.get(id=reading_id)
+
+            entry = Entry()
+            entry.reading = reading
+
+            if page_number == -1:
+                # If they didn't put a page number, use either the latest
+                # page number or just put 1
+                latest_entry = reading.latest_entry()
+                if latest_entry:
+                    entry.page_number = latest_entry.page_number
+                else:
+                    entry.page_number = 1
+            else:
+                entry.page_number = page_number
+
+            if comment != '':
+                entry.comment = comment
+
+            entry.save()
+
+            response = {'status': 200,
+                        'reading_id': reading.id,
+                        'page_number': entry.page_number,
+                        'pages_left': reading.pages_left(),
+                        'percentage': reading.percentage(),
+                       }
+        except Exception as e:
+            print(e)
+            response = { 'status': 500, 'message': "Couldn't add entry" }
+    else:
+        response = { 'status': 500, 'message': "Couldn't add entry" }
 
     return JsonResponse(response)
 

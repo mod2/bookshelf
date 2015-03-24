@@ -66,10 +66,16 @@ class Reading(models.Model):
         return page_num
 
     def percentage(self):
-        return (self.current_page() / self.end_page) * 100.0
+        if self.end_page:
+            return int((self.current_page() / self.end_page) * 100.0)
+        else:
+            return 0
 
     def pages_left(self):
-        return self.end_page - self.current_page()
+        if self.end_page:
+            return self.end_page - self.current_page()
+        else:
+            return 0
 
     def days_elapsed(self):
         first_entry = self.entries.last()
@@ -119,7 +125,7 @@ class Entry(models.Model):
         return "{} on {}".format(self.page_number, self.date)
 
     class Meta:
-        ordering = ['page_number', '-date']
+        ordering = ['-date', '-page_number']
         verbose_name_plural = "entries"
 
 

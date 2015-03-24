@@ -7,7 +7,7 @@
 <div class="folder">
 	<ul class="booklist">
 	{% for reading in folderless %}
-		<li class="container">{% include '_reading.html' %}</li>
+		<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container">{% include '_reading.html' %}</li>
 	{% endfor %}
 	</ul>
 </div>
@@ -19,7 +19,7 @@
 	<h2 class="container">{{ folder.name }}</h2>
 	<ul class="booklist">
 	{% for reading in folder.readings.all %}
-		<li class="container">{% include '_reading.html' %}</li>
+		<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container">{% include '_reading.html' %}</li>
 	{% endfor %}
 	</ul>
 </div>

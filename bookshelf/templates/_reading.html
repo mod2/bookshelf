@@ -6,12 +6,12 @@
 	</section>
 </div>
 
-<a id="reading{{ reading.id }}" class="booklink" href="{% url 'book' reading.book.slug %}">
+<a href="{% url 'book' reading.book.slug %}">
 	<span class="label">{{ reading.book.title }}</span>
 
 	<span class="percentage">
 		<span class="bar" style="width: {{ reading.percentage }}%;"></span>
 	</span>
 
-	<span class="info"><span class="num">{{ reading.percentage|floatformat:"0" }}<span>%</span></span> — {{ reading.days_elapsed }} days</span>
+	<span class="info"><span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span> — {{ reading.days_elapsed }} days</span>
 </a>
