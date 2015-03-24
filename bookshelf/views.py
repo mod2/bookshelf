@@ -34,6 +34,7 @@ def book(request, book_slug):
     folderless = Reading.objects.filter(owner=request.user, folder=None)
 
     return render_to_response('book.html', {'book': book,
+                                            'title': book.title,
                                             'folders': folders,
                                             'folderless': folderless,
                                             'request': request })
@@ -47,6 +48,7 @@ def folder(request, folder_slug):
     folderless = Reading.objects.filter(owner=request.user, folder=None)
 
     return render_to_response('folder.html', {'folder': folder,
+                                              'title': folder.name,
                                               'folders': folders,
                                               'folderless': folderless,
                                               'request': request })
@@ -58,8 +60,9 @@ def add_book(request):
         folderless = Reading.objects.filter(owner=request.user, folder=None)
 
         return render_to_response('add.html', {'folders': folders,
-                                                'folderless': folderless,
-                                                'request': request })
+                                               'title': 'Add Book',
+                                               'folderless': folderless,
+                                               'request': request })
     elif request.method == 'POST':
         try:
             title = request.POST.get('title', '')
@@ -102,6 +105,7 @@ def edit_book(request, book_slug):
     folderless = Reading.objects.filter(owner=request.user, folder=None)
 
     return render_to_response('book.html', {'book': book,
+                                            'title': '{} — Edit'.format(book.title),
                                             'folders': folders,
                                             'folderless': folderless,
                                             'request': request })
@@ -120,10 +124,11 @@ def search(request):
         )
 
     return render_to_response('results.html', {'folders': folders,
-                                            'folderless': folderless,
-                                            'results': results,
-                                            'query': query,
-                                            'request': request })
+                                               'title': '{} — Search'.format(query),
+                                               'folderless': folderless,
+                                               'results': results,
+                                               'query': query,
+                                               'request': request })
 
 
 def api_folder_update_order(request):

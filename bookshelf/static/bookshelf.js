@@ -166,6 +166,19 @@ $(document).ready(function() {
 
 		return false;
 	});
+
+	$(document).bind('keypress', '/', function() {
+		$(".search input#q").focus();
+
+		return false;
+	});
+
+	$(".search input#q").bind('keyup', 'esc', function() {
+		$(".search input#q").val('');
+		$(".search input#q").blur();
+
+		return false;
+	});
 });
 
 
