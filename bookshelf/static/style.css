@@ -46,7 +46,7 @@ header[role=banner] h1 {
 header[role=banner] h1 a.home {
 	color: #fff;
 	display: block;
-	padding-top: .5em;
+	padding-top: .7em;
 	padding-bottom: .5em;
 	text-decoration: none;
 }
@@ -63,7 +63,7 @@ header[role=banner] a.menu {
 	font-size: 1.3em;
 	height: 100%;
 	line-height: 100%;
-	padding: .1em .5em .7em;
+	padding: .3em 15px .9em;
 	z-index: 100000;
 }
 
@@ -236,7 +236,7 @@ ul.booklist li a {
 ul.booklist li a span.label {
 	font-size: 1.3em;	
 	font-weight: 600;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.01em;
 	line-height: 1.1em;
 }
 
