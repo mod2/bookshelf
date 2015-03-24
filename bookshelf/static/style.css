@@ -208,9 +208,7 @@ body.active-nav #page .mask {
 }
 
 .content .folder + .folder {
-	border-top: solid 1px #ddd;
-	margin-top: 2em;
-	padding-top: 1.25em;
+	margin-top: 3.5em;
 }
 
 ul.booklist {
@@ -218,15 +216,16 @@ ul.booklist {
 	padding: 0;
 }
 
-ul.booklist li {
+ul.booklist li.container {
 	background: #fff;
 	list-style: none;
 	overflow: hidden;
-	padding: 0;
+	padding-bottom: .75em;
+	padding-top: .75em;
 }
 
-ul.booklist li + li {
-	margin-top: 1.35em;
+ul.booklist li + li.container {
+	border-top: solid 1px #ddd;
 }
 
 ul.booklist li a {
