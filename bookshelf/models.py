@@ -73,12 +73,18 @@ class Reading(models.Model):
 
     def percentage(self):
         if self.end_page:
-            return int(((self.current_page() - (self.start_page - 1)) / self.total_pages()) * 100.0)
+            if self.current_page() < self.start_page:
+                return 0
+
+            return int((((self.start_page - 1) - self.current_page()) / self.total_pages()) * 100.0)
         else:
             return 0
 
     def pages_left(self):
         if self.end_page:
+            if self.current_page() < self.start_page:
+                return self.total_pages()
+
             return self.end_page - self.current_page()
         else:
             return 0
