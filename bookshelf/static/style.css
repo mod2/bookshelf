@@ -9,6 +9,10 @@ body {
 	padding: 0;
 }
 
+.content {
+	padding-top: 15px;
+}
+
 .content .container {
 	max-width: 500px;
 	padding: 0 15px;
@@ -188,6 +192,7 @@ body.active-nav #page .mask {
 	color: #888;
 	font-size: 1.3em;
 	font-weight: 400;
+	margin-top: 0;
 }
 
 .content h2 {
@@ -713,6 +718,172 @@ form#add-book-form input[name=author] {
 }
 
 
+/* Detail page */
+/* -------------------------------------------------- */
+
+.detail .entry {
+	color: #437dc4;
+	cursor: pointer;
+	float: right;
+	font-weight: 600;
+	margin-left: 20px;
+	text-align: center;
+	width: 4.5em;
+}
+
+.detail .entry .page_number {
+	background: #e5f5fd;
+	border-radius: 1em;
+	font-size: 1.3em;
+	padding: 2px 10px 3px;
+}
+
+.detail .entry .sub {
+	color: #bbb;
+	font-size: .7em;
+	font-style: italic;
+	line-height: 1.1em;
+	padding: 5px 0px 6px;
+}
+
+.detail .entry .sub .label {
+	font-size: .8em;
+	line-height: 1.1em;
+}
+
+.detail .entry .sub .left .pages,
+.detail .entry .sub .left .total {
+	color: #999;
+	padding: 0 1px;
+}
+
+.detail.info h1 {
+	color: #333;
+	font-weight: 600;
+	margin: 0;
+}
+
+.detail.info h2 {
+	color: #888;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0;
+	padding: 0;
+}
+
+.detail h3 {
+	color: #5278b2;
+	font-size: 1em;
+	margin-bottom: .5em;
+	margin-top: 2em;
+}
+
+.detail.entries ul {
+	margin: 0;
+	padding: 0;
+}
+
+.detail.entries li {
+	border-top: solid 1px #ddd;
+	list-style: none;
+	overflow: hidden;
+	padding: 10px 0;
+}
+
+.detail.entries li:hover {
+	background: #eee;
+}
+
+.detail.entries a {
+	color: #444;
+	text-decoration: none;
+}
+
+.detail.entries .dateinfo {
+	color: #888;
+	float: left;
+	font-size: .8em;
+	width: 90px;
+}
+
+.detail.entries span {
+	display: block;
+}
+
+.detail.entries span.time {
+	color: #aaa;
+	font-size: .85em;
+	margin-top: 1px;
+}
+
+.detail.entries .metadata {
+	color: #444;
+	margin-left: 110px;
+}
+
+.detail.entries .metadata .page-number {
+	font-size: 1em;
+	line-height: 1.1em;
+}
+
+.detail.entries .metadata .comment {
+	font-size: .9em;
+	line-height: 1.3em;
+	margin-top: 3px;
+}
+
+.detail.metadata {
+	margin-top: 1.5em;
+}
+
+.detail.metadata .group h3 {
+	margin: 0;
+}
+
+.detail.metadata .group p {
+	margin: 0;
+}
+
+
+/* Charts */
+/* -------------------------------------------------- */
+
+.chart-wrapper {
+	max-width: 100%;
+}
+
+.chart-wrapper rect.base {
+	fill: #a8456b;
+}
+
+.chart-wrapper rect.new {
+	fill: #ec7a8f;
+}
+
+.chart-wrapper text {
+	fill: white;
+	font-size: 10px;
+	font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+	text-anchor: end;
+}
+
+.chart-wrapper .axis text {
+	fill: #999;
+}
+
+.chart-wrapper .axis path,
+.chart-wrapper .axis line {
+	fill: none;
+	stroke: #bbb;
+	shape-rendering: crispEdges;
+}
+
+.chart-wrapper line.baseline {
+	fill: none;
+	stroke: #a8456b;
+	shape-rendering: crispEdges;
+}
+
 @media screen and (min-width: 700px) {
 	header[role=banner] {
 		background: none !important;
@@ -721,7 +892,7 @@ form#add-book-form input[name=author] {
 		padding-right: 20px;
 		position: absolute;
 		text-align: right;
-		top: 66px;
+		top: 50px;
 		width: 300px;
 	}
 
@@ -758,7 +929,7 @@ form#add-book-form input[name=author] {
 		left: 0px;
 		margin-bottom: 0;
 		overflow: hidden;
-		padding-top: 110px;
+		padding-top: 100px;
 		position: absolute;
 		top: 0px;
 		width: 300px;

@@ -16,7 +16,7 @@ class ReadingAdmin(admin.ModelAdmin):
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ('reading', 'page_number', 'date', 'comment', 'owner')
+    list_display = ('reading', 'page_number', 'num_pages', 'date', 'comment', 'owner')
     pass
 
 

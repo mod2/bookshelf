@@ -117,12 +117,25 @@ class Reading(models.Model):
 class Entry(models.Model):
     reading = models.ForeignKey(Reading, related_name='entries')
     page_number = models.PositiveSmallIntegerField()
-    date = models.DateTimeField(auto_now_add=True)
+    num_pages = models.PositiveSmallIntegerField(null=True, blank=True)
+    date = models.DateTimeField()
     comment = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(User, default=1)
 
     def __str__(self):
         return "{} on {}".format(self.page_number, self.date)
+
+    def save(self, *args, **kwargs):
+        if not self.date:
+            self.date = datetime.datetime.now()
+
+        if not self.num_pages:
+            if len(self.reading.entries.all()) > 0:
+                self.num_pages = self.page_number - self.reading.entries.first().page_number
+            else:
+                self.num_pages = self.page_number
+
+        return super(Entry, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['-date', '-page_number']

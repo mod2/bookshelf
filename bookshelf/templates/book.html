@@ -1,15 +1,75 @@
 {% extends '_base.html' %}
 
 {% block main %}
-<div class="detail entry">
-	<section class="page_number">{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% else %}—{% endif %}</section>
-	<section class="sub">
-		<span class="left"><span class="pages">{{ reading.pages_left }}</span> of <span class="total">{{ reading.end_page }}</span></span>
-		<span class="label">pages left</span>
-	</section>
-</div>
+<section class="detail info container"> <div class="entry">
+		<section class="page_number">{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% else %}—{% endif %}</section>
+		<section class="sub">
+			<span class="left"><span class="pages">{{ reading.pages_left }}</span> of <span class="total">{{ reading.end_page }}</span></span>
+			<span class="label">pages left</span>
+		</section>
+	</div>
 
-<h1>{{ book.title }}</h1>
-{% if book.author %}<h2>{{ book.author }}</h2>{% endif %}
+	<h1>{{ book.title }}</h1>
+	{% if book.author %}<h2>{{ book.author }}</h2>{% endif %}
+</section>
+
+<section class="detail metadata container">
+	{% if reading.starting_page %}
+	<div class="group">
+		<h3>Starting Page</h3>
+		<p>{{ reading.starting_page }}</p>
+	</div>
+	{% endif %}
+
+	<div class="group">
+		<h3>Start Date</h3>
+		<p>{{ reading.started_date }}</p>
+	</div>
+
+	{% if reading.end_date %}
+	<div class="group">
+		<h3>Finished Date</h3>
+		<p>{{ reading.end_date }}</p>
+	</div>
+	{% endif %}
+</section>
+
+<section class="detail chart container">
+	<h3>Chart</h3>
+
+	<svg class="chart-wrapper book"></svg>
+</section>
+
+{% if reading.entries %}
+<section class="detail entries container">
+	<h3>Entries</h3>
+
+	<ul>
+		{% for entry in reading.entries.all %}
+		<li>
+			<a href="{% url 'admin:bookshelf_entry_change' entry.id %}" target="_new">
+				<div class="dateinfo">
+					<span class="date">{{ entry.date|date:"j M Y" }}</span>
+					<span class="time">{{ entry.date|date:"f a" }}</span>
+				</div>
+
+				<div class="metadata">
+					<div class="page-number">p.&thinsp;{{ entry.page_number }}</div>
+					{% if entry.comment %}
+						<div class="comment">{{ entry.comment }}</div>
+					{% endif %}
+				</div>
+			</a>
+		</li>
+		{% endfor %}
+	</ul>	
+</section>
+{% endif %}
 
 {% endblock main %}
+
+{% block customscript %}
+<script type="text/javascript" charset="utf-8">
+	var data = {{ entrydata|safe }};
+</script>
+{% endblock customscript %}

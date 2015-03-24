@@ -179,6 +179,85 @@ $(document).ready(function() {
 
 		return false;
 	});
+
+	// See if we're on a page with charts
+	if ($(".chart-wrapper")) {
+		var margin = {
+			top: 10,
+			right: 20,
+			bottom: 10,
+			left: 30,
+		};
+
+		var width = 500 - margin.left - margin.right;
+		var height = 200 - margin.top - margin.bottom;
+		var barWidth = (width - margin.left - margin.right) / data.list.length;
+
+		var y = d3.scale.linear()
+			.range([height, 0])
+			.domain([0, data.end_page]);
+
+		var yPercent = d3.scale.linear()
+			.range([height, 0])
+			.domain([0, 1]);
+
+		var chart = d3.select(".chart-wrapper")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+		var bar = chart.selectAll("g")
+			.data(data.list)
+			.enter().append("g")
+			.attr("transform", function(d, i) { return "translate(" + (i * barWidth + margin.left) + ", 0)"; })
+	
+		// Already-read pages
+		var rect = bar.append("rect")
+			.data(data.list)
+			.attr("y", function(d) { return y(d.base); })
+			.attr("height", function(d) { return height - y(d.base); })
+			.attr("width", barWidth - 1)
+			.attr("transform", "translate(0, " + margin.bottom + ")")
+			.attr("class", "base");
+
+		// New pages
+		var newRect = bar.append("rect")
+			.data(data.list)
+			.attr("y", function(d) { return y(d.base + d.new); })
+			.attr("height", function(d) { return height - y(d.new); })
+			.attr("width", barWidth - 1)
+			.attr("transform", "translate(0, " + margin.bottom + ")")
+			.attr("class", "new");
+
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left")
+			.ticks(5);
+
+		var yPercentAxis = d3.svg.axis()
+			.scale(yPercent)
+			.orient("right")
+			.ticks(2, "%");
+
+		chart.append("g")
+			.attr("class", "y axis")
+			.attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+			.call(yAxis);
+
+		chart.append("g")
+			.attr("class", "y axis right")
+			.attr("transform", "translate(" + (width - margin.right - 1) + ", " + margin.top + ")")
+			.call(yPercentAxis);
+
+		var line = chart.append("line")
+			.attr("x1", margin.left)
+			.attr("y1", height)
+			.attr("x2", width - margin.right)
+			.attr("y2", height)
+			.attr("transform", "translate(0, " + margin.bottom + ")")
+			.attr("class", "baseline");
+
+	}
 });
 
 

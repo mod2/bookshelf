@@ -17,7 +17,13 @@
 	<script src="{% static 'jquery.autosize.min.js' %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static 'jquery.hotkeys.js' %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static 'jquery-ui.min.js' %}" type="text/javascript" charset="utf-8"></script>
+	{% if book %}{# detail pag3 #}
+	<script src="{% static 'd3.min.js' %}" type="text/javascript" charset="utf-8"></script>
+	{% endif %}
 	<script src="{% static 'bookshelf.js' %}" type="text/javascript" charset="utf-8"></script>
+
+	{% block customscript %}
+	{% endblock customscript %}
 </head>
 <body>
 	<div class="wrapper">

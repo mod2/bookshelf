@@ -6,7 +6,7 @@
 	</section>
 </div>
 
-<a href="{% url 'book' reading.book.slug %}">
+<a href="{% url 'book' reading.book.slug reading.id %}">
 	<span class="label title">{{ reading.book.title }}</span>
 
 	<span class="percentage">

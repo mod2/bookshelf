@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     url(r'^logout/', 'django.contrib.auth.views.logout', { 'template_name': 'logout.html', 'next_page': '/login/' }, name='logout'),
 
     url(r'^book/(.+?)/edit/$', 'bookshelf.views.edit_book', name='edit_book'),
-    url(r'^book/(.+?)/$', 'bookshelf.views.book', name='book'),
+    url(r'^book/(.+?)/(.+?)/$', 'bookshelf.views.book', name='book'),
     url(r'^folder/(.+?)/$', 'bookshelf.views.folder', name='folder'),
     url(r'^$', 'bookshelf.views.dashboard', name='dashboard'),
 
