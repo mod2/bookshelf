@@ -826,6 +826,12 @@ form#add-book-form input[name=author] {
 	line-height: 1.1em;
 }
 
+.detail.entries .metadata .page-number span {
+	color: #bbb;
+	display: inline;
+	font-size: .8em;
+}
+
 .detail.entries .metadata .comment {
 	font-size: .9em;
 	line-height: 1.3em;

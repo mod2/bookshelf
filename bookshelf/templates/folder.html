@@ -13,20 +13,5 @@
 {% endblock main %}
 
 {% block modal %}
-<form id="add-entry-modal" class="modal padless">
-	<header class="modal-group">
-		<a class="cancel-link">Cancel</a>
-
-		<h2>Page: <input id="entry-box" type="text" pattern="\d*" value="" maxlength="4" autofocus> of <span class="end-page">{{ reading.end_page }}</span></h2>
-	</header>
-
-	<div class="modal-group comment">
-		<label>Comment on <span class="title"></span></label>
-		<textarea id="comment"></textarea>
-	</div>
-
-	<div class="modal-group save">
-		<input type="submit" class="button" value="Add Entry" />
-	</div>
-</form>
+{% include '_addentry.html' %}
 {% endblock %}

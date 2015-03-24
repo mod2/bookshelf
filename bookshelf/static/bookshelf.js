@@ -24,7 +24,7 @@ $(document).ready(function() {
 
 
 	// Entry adding
-	$(".booklist .entry").on("click", function() {
+	$(".entry").on("click", function() {
 		// Only show if it's not already open
 		if ($("#add-entry-modal:visible").length == 0) {
 			// On click, populate the dialog and pull it up

@@ -16,7 +16,7 @@
 <section class="detail metadata container">
 	{% if reading.starting_page %}
 	<div class="group">
-		<h3>Starting Page</h3>
+		<h3>Start Page</h3>
 		<p>{{ reading.starting_page }}</p>
 	</div>
 	{% endif %}
@@ -54,7 +54,7 @@
 				</div>
 
 				<div class="metadata">
-					<div class="page-number">p.&thinsp;{{ entry.page_number }}</div>
+					<div class="page-number">p.&thinsp;{{ entry.page_number }} <span>({{ entry.num_pages }} pages)</span></div>
 					{% if entry.comment %}
 						<div class="comment">{{ entry.comment }}</div>
 					{% endif %}
@@ -73,3 +73,7 @@
 	var data = {{ entrydata|safe }};
 </script>
 {% endblock customscript %}
+
+{% block modal %}
+{% include '_addentry.html' %}
+{% endblock %}
