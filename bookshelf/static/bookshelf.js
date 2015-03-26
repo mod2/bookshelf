@@ -85,6 +85,7 @@ $(document).ready(function() {
 					reading.find(".percentage .bar").css("width", data.percentage + "%");
 					reading.find(".entry .page_number").html(data.page_number);
 					reading.find(".entry .sub .pages").html(data.pages_left);
+					reading.find(".stale").slideUp(150);
 
 					// Close the modal and clear it
 					$("#add-entry-modal").slideUp(150);

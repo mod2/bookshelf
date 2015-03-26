@@ -26,6 +26,7 @@ def dashboard(request):
     return render_to_response('dashboard.html', {'folders': folders,
                                               'folder': folder,
                                               'folderless': folderless,
+                                              'stale_period': settings.STALE_PERIOD,
                                               'request': request })
 
 @login_required
@@ -208,6 +209,7 @@ def search(request):
                                                'title': '{} — Search'.format(query),
                                                'folderless': folderless,
                                                'results': results,
+                                               'stale_period': settings.STALE_PERIOD,
                                                'query': query,
                                                'request': request })
 
