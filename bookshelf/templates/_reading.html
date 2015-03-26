@@ -14,4 +14,7 @@
 	</span>
 
 	<span class="info"><span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span> — {{ reading.started_date|timesince }} ago</span>
+	{% if reading.days_since_last_entry > 7 %}
+	<span class="stale">Last entry: {{ reading.latest_entry.date|timesince }} ago</span>
+	{% endif %}
 </a>

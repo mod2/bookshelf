@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from autoslug import AutoSlugField
+from django.utils import timezone
+from django.utils.timezone import utc
 import datetime
+from datetime import timedelta
 
 class Book(models.Model):
     STATUSES = (
@@ -91,10 +94,15 @@ class Reading(models.Model):
 
     def days_elapsed(self):
         first_entry = self.entries.last()
-        today = datetime.datetime.now()
+        today = datetime.datetime.utcnow().replace(tzinfo=utc)
 
-        # TODO: fix
-        return 5
+        return (today - first_entry.date).days
+
+    def days_since_last_entry(self):
+        last_entry = self.entries.first()
+        today = datetime.datetime.utcnow().replace(tzinfo=utc)
+
+        return (today - last_entry.date).days
 
     def to_dict(self):
         try:
