@@ -1,10 +1,10 @@
 {% extends 'folder.html' %}
 
 {% block main %}
-<h1 class="container">Current Books</h1>
 
 {% if folderless %}
 <div class="folder">
+	<h2 class="container">Unsorted</h2>
 	<ul class="booklist">
 	{% for reading in folderless %}
 		<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container">{% include '_reading.html' %}</li>

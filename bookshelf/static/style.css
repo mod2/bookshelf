@@ -201,7 +201,7 @@ body.active-nav #page .mask {
 .content h2 {
 	color: #5278b2;
 	font-size: 1.1em;
-	margin: 0 0 .75em;
+	margin: 0 0 .25em;
 	padding-top: .25em;
 }
 
@@ -222,8 +222,8 @@ ul.booklist li.container {
 	background: #fff;
 	list-style: none;
 	overflow: hidden;
-	padding-bottom: .75em;
-	padding-top: .75em;
+	padding-bottom: .8em;
+	padding-top: .8em;
 }
 
 ul.booklist li + li.container {
@@ -265,19 +265,25 @@ ul.booklist li .entry .sub {
 	font-size: .8em;
 	font-style: italic;
 	line-height: 1.1em;
-	padding: 5px 0px 6px;
+	padding: 7px 0px 6px;
 }
 
 ul.booklist li .entry .sub .label {
+	color: #ccc;
 	display: block;
 	font-size: .8em;
-	line-height: 1.1em;
-	margin-top: 1px;
+	line-height: 1em;
+	margin-top: 4px;
 }
 
-ul.booklist li .entry .sub .left .pages,
-ul.booklist li .entry .sub .left .total {
-	color: #999;
+ul.booklist li .entry .sub .label .total {
+	color: #bbb;
+	letter-spacing: -0.01em;
+	padding: 0 1px;
+}
+
+ul.booklist li .entry .sub .left .pages {
+	color: #848484;
 	letter-spacing: -0.01em;
 	padding: 0 1px;
 }
@@ -1000,7 +1006,7 @@ form#add-book-form input[name=author] {
 
 	main#content .content {
 		padding-right: 50px;
-		padding-top: 50px;
+		padding-top: 56px;
 	}
 
 	.content .folder + .folder {
