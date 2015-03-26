@@ -210,7 +210,7 @@ body.active-nav #page .mask {
 }
 
 .content .folder + .folder {
-	margin-top: 3.5em;
+	margin-top: 1.5em;
 }
 
 ul.booklist {
@@ -1001,5 +1001,9 @@ form#add-book-form input[name=author] {
 	main#content .content {
 		padding-right: 50px;
 		padding-top: 50px;
+	}
+
+	.content .folder + .folder {
+		margin-top: 2.5em;
 	}
 }
