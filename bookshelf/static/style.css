@@ -91,9 +91,9 @@ nav[role=menu] {
 	left: 0;
 	overflow-y: scroll;
 	overflow: hidden;
-	padding-bottom: 1em;
+	padding-bottom: 50px;
 	padding-top: 1em;
-	position: relative;
+	position: absolute;
 	text-align: right;
 	top: 0;
 	width: 200px;
@@ -160,6 +160,8 @@ body.active-nav nav[role=menu] {
 	-o-transform: translate3d(0, 0, 0);
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
+
+	position: relative;
 }
 
 body.active-nav #page {
