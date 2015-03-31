@@ -1,5 +1,7 @@
 {% extends '_base.html' %}
 
+{% load strip_time %}
+
 {% block main %}
 <section class="detail info container" data-reading-id="{{ reading.id }}">
 	<div class="entry">
@@ -24,13 +26,13 @@
 
 	<div class="group">
 		<h3>Start Date</h3>
-		<p>{{ reading.started_date }}{% if not reading.finished_date %} <span>({{ reading.started_date|timesince }} ago)</span>{% endif %}</p>
+		<p>{{ reading.started_date }}{% if not reading.finished_date %} <span>({{ reading.started_date|timesince|strip_time }})</span>{% endif %}</p>
 	</div>
 
 	{% if reading.finished_date %}
 	<div class="group">
 		<h3>Finished Date</h3>
-		<p>{{ reading.finished_date }} <span>({{ reading.started_date|timesince:reading.finished_date }})</span></p>
+		<p>{{ reading.finished_date }} <span>({{ reading.started_date|timesince:reading.finished_date|strip_time:False }})</span></p>
 	</div>
 	{% endif %}
 </section>
