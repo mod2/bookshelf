@@ -524,9 +524,17 @@ form.modal.padless {
 }
 
 form.modal.padless .modal-group {
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
+
+@media screen and (min-width: 700px) {
+	form.modal.padless .modal-group {
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+}
+
 
 form.modal#add-entry-modal {
 	position: fixed;
