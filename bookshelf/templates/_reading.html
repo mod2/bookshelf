@@ -1,22 +1,26 @@
 {% load strip_time %}
 
 <div class="entry">
+	{% if not reading.finished_date %}
 	<section class="page_number">{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% else %}—{% endif %}</section>
 	<section class="sub">
 		<span class="left"><span class="pages">{{ reading.pages_left }}</span> to go</span>
 		<span class="label">(end: <span class="total" data-end-page="{{ reading.end_page }}">{{ reading.end_page }})</span></span>
 	</section>
+	{% endif %}
 </div>
 
 <a href="{% url 'book' reading.book.slug reading.id %}">
 	<span class="label title">{{ reading.book.title }}</span>
 
+	{% if not reading.finished_date %}
 	<span class="percentage">
 		<span class="bar" style="width: {{ reading.percentage }}%;"></span>
 	</span>
+	{% endif %}
 
-	<span class="info"><span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span> — {{ reading.started_date|timesince|strip_time }}</span>
-	{% if stale_period != 0 and reading.days_since_last_entry > stale_period %}
+	<span class="info">{% if reading.finished_date %}{{ reading.total_pages }} pages, finished in {{ reading.started_date|timesince:reading.finished_date|strip_time:False }}{% else %}<span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span> — {{ reading.started_date|timesince|strip_time }}{% endif %}</span>
+	{% if not reading.finished_date and stale_period != 0 and reading.days_since_last_entry > stale_period %}
 	<span class="stale">Last entry: <i>{{ reading.latest_entry.date|timesince|strip_time }}</i></span>
 	{% endif %}
 </a>
