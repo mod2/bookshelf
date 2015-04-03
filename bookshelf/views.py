@@ -203,7 +203,7 @@ def search(request):
         results = Reading.objects.filter(
             Q(book__title__contains=query)
             | Q(book__author__contains=query)
-        )
+        ).order_by('book__title')
 
     return render_to_response('results.html', {'folders': folders,
                                                'title': '{} — Search'.format(query),
@@ -218,8 +218,8 @@ def history(request):
     folders = Folder.objects.filter(owner=request.user)
     folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
 
-    finished = Reading.objects.filter(owner=request.user, status='finished')
-    abandoned = Reading.objects.filter(owner=request.user, status='abandoned')
+    finished = Reading.objects.filter(owner=request.user, status='finished').order_by('-finished_date')
+    abandoned = Reading.objects.filter(owner=request.user, status='abandoned').order_by('-started_date')
 
     return render_to_response('history.html', {'folders': folders,
                                                'title': 'History',

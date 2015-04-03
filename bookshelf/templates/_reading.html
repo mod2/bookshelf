@@ -12,6 +12,7 @@
 
 <a href="{% url 'book' reading.book.slug reading.id %}">
 	<span class="label title">{{ reading.book.title }}</span>
+	{% if reading.book.author and title == 'History' or results %}<span class="author">{{ reading.book.author }}</span>{% endif %}
 
 	{% if not reading.finished_date %}
 	<span class="percentage">
