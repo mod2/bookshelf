@@ -1039,3 +1039,30 @@ form#add-book-form input[name=author] {
 		margin-top: 2.5em;
 	}
 }
+
+
+/* Tags */
+/* -------------------------------------------------- */
+
+.tags {
+	display: block;
+	font-size: .75em;
+	margin-top: 5px;
+}
+
+.tags .tag {
+	display: inline-block;
+	margin-right: 10px;
+	color: #bbb;
+}
+
+.tags .tag .blob {
+	background: #78b4df;
+	border-radius: 1em;
+	display: inline-block;
+	height: 0.4em;
+	margin-right: 3px;
+	position: relative;
+	top: -2px;
+	width: 0.4em;
+}
