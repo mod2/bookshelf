@@ -22,11 +22,7 @@
 
 	<span class="info">{% if reading.finished_date %}{{ reading.total_pages }} pages, finished in {{ reading.started_date|timesince:reading.finished_date|strip_time:False }}{% else %}<span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span> — {{ reading.started_date|timesince|strip_time }}{% endif %}</span>
 
-	{% if not reading.finished_date and stale_period != 0 and reading.days_since_last_entry > stale_period %}
+	{% if not reading.finished_date and stale_period != 0 and reading.days_since_last_entry >= stale_period %}
 	<span class="stale">Last entry: <i>{{ reading.latest_entry.date|timesince|strip_time }}</i></span>
-	{% endif %}
-
-	{% if reading.tags.all %}
-	<span class="tags">{% for tag in reading.tags.all %}<span class="tag"><span class="blob"{% if tag.color %} style="background: {{ tag.color }};"{% endif %}></span>{{ tag.name }}</span>{% endfor %}</span>
 	{% endif %}
 </a>

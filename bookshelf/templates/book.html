@@ -14,9 +14,16 @@
 
 	<h1>{{ book.title }}</h1>
 	{% if book.author %}<h2>{{ book.author }}</h2>{% endif %}
+
+	{% if reading.tags.all %}
+	<div class="group tags">
+		{% for tag in reading.tags.all %}<span class="tag"><span class="blob"{% if tag.color %} style="background: {{ tag.color }};"{% endif %}></span>{{ tag.name }}</span>{% endfor %}
+	</div>
+	{% endif %}
 </section>
 
 <section class="detail metadata container">
+
 	{% if reading.starting_page %}
 	<div class="group">
 		<h3>Start Page</h3>

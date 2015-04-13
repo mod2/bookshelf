@@ -936,6 +936,7 @@ form#add-book-form input[name=author] {
 
 .chart-wrapper {
 	max-width: 100%;
+	width: 100%;
 }
 
 .chart-wrapper rect.base {

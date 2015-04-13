@@ -208,12 +208,12 @@ $(document).ready(function() {
 	if ($(".chart-wrapper").length && data.list) {
 		var margin = {
 			top: 10,
-			right: 20,
+			right: 10,
 			bottom: 10,
 			left: 30,
 		};
 
-		var width = 500 - margin.left - margin.right;
+		var width = $(".chart-wrapper").width() - margin.left - margin.right;
 		var height = 200 - margin.top - margin.bottom;
 		var barWidth = (width - margin.left - margin.right) / data.list.length;
 

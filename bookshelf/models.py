@@ -93,16 +93,16 @@ class Reading(models.Model):
             return 0
 
     def days_elapsed(self):
-        first_entry = self.entries.last()
-        today = datetime.datetime.utcnow().replace(tzinfo=utc)
+        first_entry = self.entries.last().date.replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        today = datetime.datetime.now().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
 
-        return (today - first_entry.date).days
+        return (today - first_entry).days
 
     def days_since_last_entry(self):
-        last_entry = self.entries.first()
-        today = datetime.datetime.utcnow().replace(tzinfo=utc)
-
-        return (today - last_entry.date).days
+        last_entry = self.entries.first().date.replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        today = datetime.datetime.utcnow().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        
+        return (today - last_entry).days
 
     def to_dict(self):
         try:
