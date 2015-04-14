@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
 from autoslug import AutoSlugField
@@ -103,6 +105,14 @@ class Reading(models.Model):
         today = datetime.datetime.utcnow().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
         
         return (today - last_entry).days
+
+    def stale(self):
+        from django.conf import settings
+
+        if not reading.finished_date and settings.STALE_PERIOD != 0 and self.days_since_last_entry() > settings.STALE_PERIOD:
+            return True
+
+        return False
 
     def to_dict(self):
         try:

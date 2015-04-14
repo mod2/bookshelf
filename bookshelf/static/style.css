@@ -201,7 +201,7 @@ body.active-nav #page .mask {
 .content h2 {
 	color: #5278b2;
 	font-size: 1.1em;
-	margin: 0 0 .25em;
+	margin: 0 0 .15em;
 	padding-top: .25em;
 }
 
@@ -232,14 +232,24 @@ ul.booklist li + li.container {
 
 ul.booklist li a {
 	color: #444;
+	display: block;
 	text-decoration: none;
 }
 
 ul.booklist li a span.label {
+	cursor: pointer;
 	font-size: 1.3em;	
 	font-weight: 600;
 	letter-spacing: -0.01em;
 	line-height: 1.1em;
+}
+
+ul.booklist li a:hover span.label {
+	color: #0578be;
+}
+
+ul.booklist li.stale a span.label {
+	color: #c02a2a;
 }
 
 ul.booklist li a span.author {
@@ -310,6 +320,10 @@ ul.booklist li .info .num {
 	font-weight: 600;
 }
 
+ul.booklist li.stale .info .num {
+	color: #ea3131;
+}
+
 ul.booklist li .info .percent-sign {
 	color: #e46286;
 	font-size: .8em;
@@ -318,13 +332,10 @@ ul.booklist li .info .percent-sign {
 }
 
 ul.booklist li .stale {
-	background: #efeac5;
-	border-radius: 2px;
-	color: #b2913a;
-	display: inline-block;
-	font-size: .8em;
-	margin-top: 5px;
-	padding: 1px 5px 2px;
+	color: #cd7474;
+	display: block;
+	font-size: .65em;
+	margin-top: 4px;
 }
 
 ul.booklist li .entry:hover .page_number {
@@ -366,14 +377,18 @@ ul.booklist li.ui-sortable-helper .info {
 	display: block;
 	margin-top: 6px;
 	width: 100px;
-	height: 14px;
+	height: 10px;
 }
 
 .percentage .bar {
 	background: #333;
 	border-radius: 3px 0 0 3px;
 	display: block;
-	height: 14px;
+	height: 10px;
+}
+
+.stale .percentage .bar {
+	background: #9d1010;
 }
 
 

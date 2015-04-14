@@ -78,6 +78,7 @@ $(document).ready(function() {
 					// Update the entry
 					if ($("ul.booklist").length) {
 						var reading = $("ul.booklist li[data-reading-id=" + data.reading_id + "]");
+						reading.removeClass("stale");
 					} else {
 						var reading = $(".detail.info");
 					}
