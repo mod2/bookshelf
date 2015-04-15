@@ -6,7 +6,7 @@
 {% if finished %}
 <div class="folder">
 <h2 class="container">Finished</h2>
-<ul class="booklist">
+<ul class="booklist history">
 {% for reading in finished %}
 	<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container">{% include '_reading.html' %}</li>
 {% endfor %}
@@ -17,7 +17,7 @@
 {% if abandoned %}
 <div class="folder">
 <h2 class="container">Abandoned</h2>
-<ul class="booklist">
+<ul class="booklist history">
 {% for reading in abandoned %}
 	<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container">{% include '_reading.html' %}</li>
 {% endfor %}

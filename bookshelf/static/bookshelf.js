@@ -126,7 +126,7 @@ $(document).ready(function() {
 		},
 	});
 
-	$("ul.booklist").sortable({
+	$("ul.booklist:not(.history)").sortable({
 		placeholder: "placeholder container",
 		update: function(event, ui) {
 			var order = [];
