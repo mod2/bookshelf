@@ -27,12 +27,8 @@
 				finished {{ reading.finished_date|date:"F j, Y" }}
 				({% if reading.finished_date == reading.started_date %}1 day{% else %}{{ reading.started_date|timesince:reading.finished_date|strip_time:False }}{% endif %})
 			{% else %}
-				<span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span> — {{ reading.started_date|timesince|strip_time }}
+			<span class="num">{{ reading.percentage }}</span><span class="percent-sign">%</span><span class="last-read"> — {{ reading.latest_entry.date|timesince|strip_time }}</span>
 			{% endif %}
 		</span>
-
-		{% if not reading.finished_date and stale_period != 0 and reading.days_since_last_entry > stale_period %}
-		<span class="stale">Last entry: <i>{{ reading.latest_entry.date|timesince|strip_time }}</i></span>
-		{% endif %}
 	</a>
 </li>
