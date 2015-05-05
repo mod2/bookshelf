@@ -1162,6 +1162,10 @@ form#add-book-form input[name=author] {
 		order: 0;
 	}
 
+	ul.booklist li a.title span.label {
+		font-size: 1.2em;
+	}
+
 	ul.booklist li a.metadata {
 		flex: 1;
 		margin-left: 35px;
