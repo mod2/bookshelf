@@ -103,11 +103,11 @@ $(document).ready(function() {
 	});
 
 
-	$("nav[role=menu] .folders").sortable({
-		placeholder: "folder placeholder container",
+	$(".folders").sortable({
+		placeholder: "folder-item placeholder container",
 		update: function(event, ui) {
 			var order = [];
-			var items = ui.item.parents(".folders").find(".folder");
+			var items = ui.item.parents(".folders").find(".folder-item");
 
 			for (var i=0; i<items.length; i++) {
 				var item = $(items[i]);

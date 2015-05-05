@@ -20,13 +20,14 @@ def dashboard(request):
         'slug': 'dashboard',
     }
 
-
     folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
+    total = len(Reading.objects.filter(owner=request.user, status='active'))
 
     return render_to_response('dashboard.html', {'folders': folders,
                                               'folder': folder,
                                               'folderless': folderless,
                                               'stale_period': settings.STALE_PERIOD,
+                                              'total': total,
                                               'request': request })
 
 @login_required
@@ -34,8 +35,7 @@ def book(request, book_slug, reading_id):
     book = Book.objects.filter(slug=book_slug, owner=request.user)[0]
     reading = Reading.objects.get(id=reading_id, owner=request.user)
 
-    folders = Folder.objects.filter(owner=request.user)
-    folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
+    total = len(Reading.objects.filter(owner=request.user, status='active'))
 
     # TODO: Create chart where x = list of days from start_date to either now or finished_date
     # And y is page_number for that day (or last page number)
@@ -117,33 +117,39 @@ def book(request, book_slug, reading_id):
                                             'reading': reading,
                                             'title': book.title,
                                             'entrydata': json.dumps(entrydata),
-                                            'folders': folders,
-                                            'folderless': folderless,
+                                            'total': total,
                                             'request': request })
 
 
 @login_required
 def folder(request, folder_slug):
     folder = Folder.objects.get(slug=folder_slug, owner=request.user)
-    folders = Folder.objects.filter(owner=request.user)
-
-    folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
+    total = len(Reading.objects.filter(owner=request.user, status='active'))
 
     return render_to_response('folder.html', {'folder': folder,
                                               'title': folder.name,
-                                              'folders': folders,
-                                              'folderless': folderless,
+                                              'request': request })
+
+@login_required
+def organize(request):
+    folders = Folder.objects.filter(owner=request.user)
+    total = len(Reading.objects.filter(owner=request.user, status='active'))
+    folder = {
+        'slug': 'organize',
+    }
+
+    return render_to_response('organize.html', {'folders': folders,
+                                              'folder': folder,
+                                              'total': total,
                                               'request': request })
 
 @login_required
 def add_book(request):
     if request.method == 'GET':
-        folders = Folder.objects.filter(owner=request.user)
-        folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
+        total = len(Reading.objects.filter(owner=request.user, status='active'))
 
-        return render_to_response('add.html', {'folders': folders,
-                                               'title': 'Add Book',
-                                               'folderless': folderless,
+        return render_to_response('add.html', {'title': 'Add Book',
+                                               'total': total,
                                                'request': request })
     elif request.method == 'POST':
         try:
@@ -183,21 +189,18 @@ def add_book(request):
 @login_required
 def edit_book(request, book_slug):
     book = Book.objects.get(slug=book_slug)
-    folders = Folder.objects.filter(owner=request.user)
-    folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
+    total = len(Reading.objects.filter(owner=request.user, status='active'))
 
     return render_to_response('book.html', {'book': book,
                                             'title': '{} — Edit'.format(book.title),
-                                            'folders': folders,
-                                            'folderless': folderless,
+                                            'total': total,
                                             'request': request })
 
 @login_required
 def search(request):
     query = request.GET.get('q', '')
 
-    folders = Folder.objects.filter(owner=request.user)
-    folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
+    total = len(Reading.objects.filter(owner=request.user, status='active'))
 
     if query != '':
         results = Reading.objects.filter(
@@ -205,9 +208,8 @@ def search(request):
             | Q(book__author__contains=query)
         ).order_by('book__title')
 
-    return render_to_response('results.html', {'folders': folders,
+    return render_to_response('results.html', {'total': total,
                                                'title': '{} — Search'.format(query),
-                                               'folderless': folderless,
                                                'results': results,
                                                'stale_period': settings.STALE_PERIOD,
                                                'query': query,
@@ -215,17 +217,14 @@ def search(request):
 
 @login_required
 def history(request):
-    folders = Folder.objects.filter(owner=request.user)
-    folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
-
+    total = len(Reading.objects.filter(owner=request.user, status='active'))
     finished = Reading.objects.filter(owner=request.user, status='finished').order_by('-finished_date')
     abandoned = Reading.objects.filter(owner=request.user, status='abandoned').order_by('-started_date')
 
-    return render_to_response('history.html', {'folders': folders,
+    return render_to_response('history.html', {'total': total,
                                                'title': 'History',
                                                'finished': finished,
                                                'abandoned': abandoned,
-                                               'folderless': folderless,
                                                'request': request })
 
 def api_folder_update_order(request):

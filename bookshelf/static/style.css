@@ -130,28 +130,20 @@ nav[role=menu] h3 {
 	margin: 3px 0 0;
 }
 
-nav[role=menu] .system {
-	font-size: .85em;
-	margin-top: 2.5em;
+nav[role=menu] a {
+	font-size: 1.1em;
+	padding: 10px 20px;
 }
 
-nav[role=menu] .system a {
+nav[role=menu] a.add-book {
+	color: #c9e8a6;
+	margin-top: 1em;
+}
+
+nav[role=menu] a.logout {
 	color: #8ca7b5;
-	padding: 6px 20px;
-}
-
-nav[role=menu] .system a.add-book {
-	color: #a2bb87;
-}
-
-nav[role=menu] .folder.placeholder {
-	background: #111;
-	height: 4em;
-}
-
-nav[role=menu] .folder.ui-sortable-helper {
-	background: rgba(0, 0, 0, 0.7);
-	border-radius: 5px;
+	font-size: .8em;
+	margin-top: 1em;
 }
 
 body.active-nav nav[role=menu] {
@@ -1101,6 +1093,49 @@ form#add-book-form input[name=author] {
 	top: -2px;
 	width: 0.4em;
 }
+
+
+/* Organize page */
+/* -------------------------------------------------- */
+
+.folders .folder-item {
+	overflow: hidden;
+	padding: 9px 0;
+}
+
+.folders .folder-item a {
+	color: #444;
+	text-decoration: none;
+}
+
+.folders .folder-item h2 {
+	margin: 0;
+	padding: 0;
+}
+
+.folders .folder-item h3 {
+	color: #888;
+	font-size: .7em;
+	font-style: italic;
+	font-weight: 400;
+	line-height: 1.1em;
+	margin: 0;
+}
+
+.folders .placeholder {
+	background: #eee;
+	height: 3em;
+}
+
+.folders .folder-item.ui-sortable-helper {
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	overflow: hidden;
+	padding: 12px;
+	max-width: 300px;
+}
+
 
 
 /* Media queries */

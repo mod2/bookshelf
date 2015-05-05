@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^folder/(.+?)/$', 'bookshelf.views.folder', name='folder'),
     url(r'^$', 'bookshelf.views.dashboard', name='dashboard'),
 
+    url(r'^organize/$', 'bookshelf.views.organize', name='organize'),
     url(r'^add/$', 'bookshelf.views.add_book', name='add_book'),
     url(r'^search/$', 'bookshelf.views.search', name='search'),
     url(r'^history/$', 'bookshelf.views.history', name='history'),
