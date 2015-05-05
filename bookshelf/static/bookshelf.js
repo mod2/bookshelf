@@ -220,7 +220,7 @@ $(document).ready(function() {
 
 		var y = d3.scale.linear()
 			.range([height, 0])
-			.domain([0, data.end_page]);
+			.domain([data.start_page, data.end_page]);
 
 		var yPercent = d3.scale.linear()
 			.range([height, 0])
