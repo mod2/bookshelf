@@ -1101,3 +1101,60 @@ form#add-book-form input[name=author] {
 	top: -2px;
 	width: 0.4em;
 }
+
+
+/* Media queries */
+@media screen and (min-width: 1100px) {
+	.content .folder {
+		max-width: 780px;
+	}
+
+	.content .container {
+		max-width: 780px;
+	}
+
+	ul.booklist li {
+		display: flex;
+	}
+
+	ul.booklist li.container {
+		padding-bottom: 0.6em;
+		padding-top: 0.6em;
+	}
+
+	ul.booklist li a.title {
+		flex: 1.4;
+		order: 1;
+	}
+
+	ul.booklist li a.metadata {
+		flex: 1;
+		margin-left: 15px;
+		order: 3;
+	}
+
+	ul.booklist li .entry {
+		display: flex;
+		flex: 1;
+		margin-left: 0;
+		order: 2;
+		overflow: hidden;
+	}
+
+	ul.booklist li .entry .page_number {
+		margin-left: 15px;
+		width: 3.25em;
+		height: 1.4em;
+	}
+
+	ul.booklist li .entry .sub {
+		margin-left: 15px;
+		padding: 2px 0 0;
+		text-align: left;
+	}
+
+	ul.booklist li .info {
+		font-size: .75em;
+		line-height: 1.1em;
+	}
+}

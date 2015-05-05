@@ -11,10 +11,12 @@
 	</div>
 	{% endif %}
 
-	<a href="{% url 'book' reading.book.slug reading.id %}">
+	<a class="title" href="{% url 'book' reading.book.slug reading.id %}">
 		<span class="label title">{{ reading.book.title }}</span>
 		{% if reading.book.author and title == 'History' or results %}<span class="author">{{ reading.book.author }}</span>{% endif %}
+	</a>
 
+	<a class="metadata" href="{% url 'book' reading.book.slug reading.id %}">
 		{% if not reading.finished_date %}
 		<span class="percentage">
 			<span class="bar" style="width: {{ reading.percentage }}%;"></span>
