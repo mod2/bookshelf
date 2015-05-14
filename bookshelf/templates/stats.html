@@ -1,0 +1,41 @@
+{% extends 'folder.html' %}
+{% load humanize %}
+
+{% block main %}
+<h1 class="container">Stats</h1>
+
+<h2 class="container">By Year</h2>
+<ul class="stats container">
+	{% for i in years %}
+	<li>
+		<span class="label">{{ i.label }}</span>
+		<span class="group">
+			<span class="pages"><b>{{ i.pages|intcomma }}</b> pages</span>
+			<span class="finished"><b>{{ i.finished }}</b> finished</span>
+		</span>
+		<span class="group">
+			<span class="started"><b>{{ i.started }}</b> started</span>
+			<span class="abandoned"><b>{{ i.abandoned }}</b> abandoned ({{ i.abandoned_percentage|floatformat:0 }}%)</span>
+		</span>
+	</li>
+	{% endfor %}
+</ul>
+
+<h2 class="container">By Month</h2>
+<ul class="stats container">
+	{% for i in months %}
+	<li>
+		<span class="label">{{ i.label }}</span>
+		<span class="group">
+			<span class="pages"><b>{{ i.pages|intcomma }}</b> pages</span>
+			<span class="finished"><b>{{ i.finished }}</b> finished</span>
+		</span>
+		<span class="group">
+			<span class="started"><b>{{ i.started }}</b> started</span>
+			<span class="abandoned"><b>{{ i.abandoned }}</b> abandoned ({{ i.abandoned_percentage|floatformat:0 }}%)</span>
+		</span>
+	</li>
+	{% endfor %}
+</ul>
+
+{% endblock main %}

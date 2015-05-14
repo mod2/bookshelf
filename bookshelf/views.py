@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.timezone import utc
 from datetime import datetime, timedelta, time
+import calendar
 
 from .models import Book, Reading, Entry, Folder
 
@@ -226,6 +227,90 @@ def history(request):
                                                'finished': finished,
                                                'abandoned': abandoned,
                                                'request': request })
+
+@login_required
+def stats(request):
+    def get_stats_for_range(beginning, end):
+        # Get entries for the range
+        entries = Entry.objects.filter(owner=request.user, date__gte=beginning, date__lte=end)
+
+        # Pages read is just a sum of the entry amounts
+        pages = sum(e.num_pages for e in entries)
+
+        # Get books started/finished/abandoned during this range
+        finished = Reading.objects.filter(owner=request.user, finished_date__gte=beginning, finished_date__lte=end, status='finished')
+        started = Reading.objects.filter(owner=request.user, started_date__gte=beginning, started_date__lte=end)
+        abandoned = started.filter(status='abandoned')
+
+        # Percentage
+        if len(started) > 0:
+            abandoned_percentage = (len(abandoned) / len(started) * 100.0)
+        else:
+            abandoned_percentage = 0
+
+        return {
+            'finished': len(finished),
+            'pages': pages,
+            'started': len(started),
+            'abandoned': len(abandoned),
+            'abandoned_percentage': abandoned_percentage,
+        }
+
+    total = len(Reading.objects.filter(owner=request.user, status='active'))
+
+    all_entries = Entry.objects.filter(owner=request.user).order_by('date')
+    first_entry = all_entries.first()
+    last_entry = all_entries.last()
+
+    start_year = first_entry.date.year
+    start_month = first_entry.date.month
+
+    end_year = last_entry.date.year
+    end_month = last_entry.date.month
+
+    # Get the years
+    years = []
+    for y in range(start_year, end_year + 1):
+        year_beginning = datetime(y, 1, 1)
+        year_end = datetime(y, 12, 31)
+
+        year = get_stats_for_range(year_beginning, year_end)
+        year['label'] = y
+
+        years.append(year)
+
+    years.reverse()
+
+    # Get the months
+    months = []
+    month_name = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    for y in range(start_year, end_year + 1):
+        for m in range(1, 13):
+            # Boundary checks
+            if y == end_year:
+                if m > end_month:
+                    continue
+            if y == start_year:
+                if m < start_month:
+                    continue
+
+            month_beginning = datetime(y, m, 1)
+            month_end = datetime(y, m, calendar.monthrange(y, m)[1])
+
+            month = get_stats_for_range(month_beginning, month_end)
+
+            month['label'] = "{} {}".format(month_name[m - 1], y)
+
+            months.append(month)
+
+    months.reverse()
+
+    return render_to_response('stats.html', {'total': total,
+                                             'title': 'Stats',
+                                             'years': years,
+                                             'months': months,
+                                             'request': request })
+
 
 def api_folder_update_order(request):
     order = request.GET.get('order', '')

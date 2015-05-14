@@ -1137,6 +1137,57 @@ form#add-book-form input[name=author] {
 }
 
 
+/* Stats page */
+/* -------------------------------------------------- */
+
+ul.stats {
+	margin: 0 0 1em 0;
+	padding: 0;
+}
+
+ul.stats li {
+	list-style: none;
+	overflow: hidden;
+	padding: 12px 0;
+}
+
+ul.stats li + li {
+	border-top: solid 1px #ddd;
+}
+
+ul.stats li span {
+	display: inline-block;
+}
+
+ul.stats li .label {
+	display: block;
+	float: left;
+	font-size: 1.1em;
+	font-weight: 600;
+}
+
+ul.stats li span.group {
+	display: block;
+	margin-left: 90px;
+}
+
+ul.stats li .pages {
+	width: 110px;
+}
+
+ul.stats li .started {
+	color: #aaa;
+	font-size: .8em;
+	margin-top: 3px;
+	margin-right: 25px;
+}
+
+ul.stats li .abandoned {
+	color: #aaa;
+	font-size: .8em;
+	margin-left: 0;
+}
+
 
 /* Media queries */
 @media screen and (min-width: 1100px) {
@@ -1200,5 +1251,22 @@ form#add-book-form input[name=author] {
 
 	ul.booklist li .percentage {
 		margin-top: 3px;
+	}
+
+	ul.stats li span.group {
+		display: inline-block;
+		margin-left: 50px;
+	}
+
+	ul.stats li span.label {
+		width: 80px;
+	}
+
+	ul.stats li .pages {
+		width: 130px;
+	}
+
+	ul.stats li .finished {
+		width: 90px;
 	}
 }

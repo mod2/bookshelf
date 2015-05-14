@@ -39,7 +39,7 @@
 			<a href="{% url 'dashboard' %}"{% if folder.slug == "dashboard" %}class="selected"{% endif %}>{{ total }} Current Book{% if total != 1 %}s{% endif %}</a>
 			<a class="add-book" href="{% url 'add_book' %}">+ Add Book</a>
 			<a href="{% url 'organize' %}">Organize</a>
-			<a href="">Stats</a>
+			<a href="{% url 'stats' %}">Stats</a>
 			<a href="{% url 'history' %}">History</a>
 			<a href="{% url 'admin:index' %}" target="_new">Admin</a>
 			<a class="logout" href="{% url 'logout' %}">Logout</a>
