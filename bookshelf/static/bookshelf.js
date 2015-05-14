@@ -75,10 +75,13 @@ $(document).ready(function() {
 				method: 'POST',
 				data: data,
 				success: function(data) {
+					var deleteEntry = false;
+
 					// Update the entry
 					if ($("ul.booklist").length) {
 						var reading = $("ul.booklist li[data-reading-id=" + data.reading_id + "]");
 						reading.removeClass("stale");
+						deleteReading = true;
 					} else {
 						var reading = $(".detail.info");
 					}
@@ -94,7 +97,7 @@ $(document).ready(function() {
 					$("#add-entry-modal textarea#comment").val('');
 
 					// If finished, hide it
-					if (data.pages_left == 0) {
+					if (data.pages_left == 0 && deleteReading) {
 						reading.slideUp(200, function() {
 							$(this).remove();
 						});
