@@ -1145,6 +1145,12 @@ ul.stats {
 	padding: 0;
 }
 
+ul.stats + ul.stats {
+	border-top: solid 1px #ccc;
+	margin-top: 1em;
+	padding-top: 1em;
+}
+
 ul.stats li {
 	list-style: none;
 	overflow: hidden;
@@ -1160,6 +1166,7 @@ ul.stats li span {
 }
 
 ul.stats li .label {
+	color: #5278b2;
 	display: block;
 	float: left;
 	font-size: 1.1em;
@@ -1167,25 +1174,36 @@ ul.stats li .label {
 }
 
 ul.stats li span.group {
+	color: #bbb;
 	display: block;
 	margin-left: 90px;
 }
 
+ul.stats li span.group b {
+	color: #201915;
+}
+
 ul.stats li .pages {
-	width: 110px;
+	width: 95px;
 }
 
 ul.stats li .started {
-	color: #aaa;
 	font-size: .8em;
 	margin-top: 3px;
-	margin-right: 25px;
+	width: 95px;
 }
 
 ul.stats li .abandoned {
-	color: #aaa;
 	font-size: .8em;
 	margin-left: 0;
+}
+
+ul.stats li span.group .started b {
+	color: #888;
+}
+
+ul.stats li span.group .abandoned b {
+	color: #888;
 }
 
 
