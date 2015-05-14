@@ -1269,4 +1269,8 @@ ul.stats li .abandoned {
 	ul.stats li .finished {
 		width: 90px;
 	}
+
+	ul.stats li .started {
+		width: 70px;
+	}
 }
