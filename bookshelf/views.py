@@ -249,10 +249,13 @@ def stats(request):
             abandoned_percentage = 0
 
         return {
-            'finished': len(finished),
             'pages': pages,
+            'finished': len(finished),
+            'finished_titles': '; '.join([b.book.title for b in finished.order_by('finished_date')]),
             'started': len(started),
+            'started_titles': '; '.join([b.book.title for b in started.order_by('started_date')]),
             'abandoned': len(abandoned),
+            'abandoned_titles': '; '.join([b.book.title for b in abandoned.order_by('started_date')]),
             'abandoned_percentage': abandoned_percentage,
         }
 

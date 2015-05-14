@@ -10,11 +10,11 @@
 		<span class="label">{{ i.label }}</span>
 		<span class="group">
 			<span class="pages"><b>{{ i.pages|intcomma }}</b> pages</span>
-			<span class="finished"><b>{{ i.finished }}</b> finished</span>
+			<span class="finished" title="{{ i.finished_titles }}"><b>{{ i.finished }}</b> finished</span>
 		</span>
 		<span class="group">
-			<span class="started"><b>{{ i.started }}</b> started</span>
-			<span class="abandoned"><b>{{ i.abandoned }}</b> abandoned ({{ i.abandoned_percentage|floatformat:0 }}%)</span>
+			<span class="started" title="{{ i.started_titles }}"><b>{{ i.started }}</b> started</span>
+			<span class="abandoned" title="{{ i.abandoned_titles }}"><b>{{ i.abandoned }}</b> abandoned ({{ i.abandoned_percentage|floatformat:0 }}%)</span>
 		</span>
 	</li>
 	{% endfor %}
@@ -26,11 +26,11 @@
 		<span class="label">{{ i.label }}</span>
 		<span class="group">
 			<span class="pages"><b>{{ i.pages|intcomma }}</b> pages</span>
-			<span class="finished"><b>{{ i.finished }}</b> finished</span>
+			<span class="finished" title="{{ i.finished_titles }}"><b>{{ i.finished }}</b> finished</span>
 		</span>
 		<span class="group">
-			<span class="started"><b>{{ i.started }}</b> started</span>
-			<span class="abandoned"><b>{{ i.abandoned }}</b> abandoned ({{ i.abandoned_percentage|floatformat:0 }}%)</span>
+			<span class="started" title="{{ i.started_titles }}"><b>{{ i.started }}</b> started</span>
+			<span class="abandoned" title="{{ i.abandoned_titles }}"><b>{{ i.abandoned }}</b> abandoned ({{ i.abandoned_percentage|floatformat:0 }}%)</span>
 		</span>
 	</li>
 	{% endfor %}
