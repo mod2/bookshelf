@@ -92,6 +92,13 @@ $(document).ready(function() {
 					$("#add-entry-modal").slideUp(150);
 					$("#add-entry-modal #entry-box").val('');
 					$("#add-entry-modal textarea#comment").val('');
+
+					// If finished, hide it
+					if (data.pages_left == 0) {
+						reading.slideUp(200, function() {
+							$(this).remove();
+						});
+					}
 				},
 				error: function(data) {
 					console.log("Error! :(", data);

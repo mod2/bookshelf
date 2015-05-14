@@ -377,6 +377,12 @@ def api_reading_add_entry(request):
 
             entry.save()
 
+            # Check to see if we've finished the book
+            if reading.pages_left() == 0:
+                reading.finished_date = datetime.now()
+                reading.status = 'finished'
+                reading.save()
+
             response = {'status': 200,
                         'reading_id': reading.id,
                         'page_number': entry.page_number,
