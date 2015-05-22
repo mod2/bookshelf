@@ -20,7 +20,17 @@
 	</div>
 
 	<div class="group">
-		<input type="submit" value="Add" class="button" />
+		<label>Folder</label>
+		<select name="folder">
+			<option></option>
+			{% for f in folders %}
+			<option value="{{ f.slug }}">{{ f.name }}</option>
+			{% endfor %}
+		</select>
+	</div>
+
+	<div class="group submit">
+		<input type="submit" value="Add Book" class="button" />
 	</div>
 
 	<div class="group optional">

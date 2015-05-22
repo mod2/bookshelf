@@ -148,9 +148,11 @@ def organize(request):
 def add_book(request):
     if request.method == 'GET':
         total = len(Reading.objects.filter(owner=request.user, status='active'))
+        folders = Folder.objects.filter(owner=request.user)
 
         return render_to_response('add.html', {'title': 'Add Book',
                                                'total': total,
+                                               'folders': folders,
                                                'request': request })
     elif request.method == 'POST':
         try:
@@ -158,6 +160,7 @@ def add_book(request):
             author = request.POST.get('author', '')
             num_pages = int(request.POST.get('num_pages', 0))
             starting_page = int(request.POST.get('starting_page', 1))
+            folder = request.POST.get('folder', '')
 
             if title != '':
                 # Create the book
@@ -175,6 +178,9 @@ def add_book(request):
                 reading.started_date = datetime.now()
                 reading.start_page = starting_page
                 reading.end_page = num_pages
+                if folder:
+                    f = Folder.objects.get(slug=folder)
+                    reading.folder = f
                 reading.save()
 
                 # Return the book and reading IDs

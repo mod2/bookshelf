@@ -734,12 +734,22 @@ form#add-book-form .group + .group {
 	margin-top: .75em;
 }
 
+form#add-book-form .group.submit {
+	margin-top: 1.25em;
+}
+
+
 form#add-book-form input[name=title] {
 	width: 100%;
 }
 
 form#add-book-form input[name=author] {
 	width: 80%;
+}
+
+form#add-book-form select {
+	font-size: 1.2em;
+	min-width: 200px;
 }
 
 
