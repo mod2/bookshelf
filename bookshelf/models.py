@@ -112,7 +112,7 @@ class Reading(models.Model):
         from django.conf import settings
 
         # If the reading has a stale period, use it instead of the system default
-        if self.stale_period != 0:
+        if self.stale_period > 0:
             stale_period = self.stale_period
         else:
             stale_period = settings.STALE_PERIOD
