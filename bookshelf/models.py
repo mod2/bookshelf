@@ -50,6 +50,8 @@ class Reading(models.Model):
 
     order = models.PositiveSmallIntegerField(default=100)
 
+    stale_period = models.PositiveSmallIntegerField(default=-1)
+
     folder = models.ForeignKey('Folder', null=True, blank=True, related_name='readings')
 
     tags = models.ManyToManyField('Tag', null=True, blank=True)
@@ -106,10 +108,21 @@ class Reading(models.Model):
         
         return (today - last_entry).days
 
-    def stale(self):
+    def get_stale_period(self):
         from django.conf import settings
 
-        if not reading.finished_date and settings.STALE_PERIOD != 0 and self.days_since_last_entry() > settings.STALE_PERIOD:
+        # If the reading has a stale period, use it instead of the system default
+        if self.stale_period != -1:
+            stale_period = self.stale_period
+        else:
+            stale_period = settings.STALE_PERIOD
+
+        return stale_period
+
+    def stale(self):
+        stale_period = self.get_stale_period()
+
+        if not reading.finished_date and stale_period != 0 and self.days_since_last_entry() > stale_period:
             return True
 
         return False

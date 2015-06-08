@@ -27,7 +27,6 @@ def dashboard(request):
     return render_to_response('dashboard.html', {'folders': folders,
                                               'folder': folder,
                                               'folderless': folderless,
-                                              'stale_period': settings.STALE_PERIOD,
                                               'total': total,
                                               'request': request })
 
@@ -218,7 +217,6 @@ def search(request):
     return render_to_response('results.html', {'total': total,
                                                'title': '{} — Search'.format(query),
                                                'results': results,
-                                               'stale_period': settings.STALE_PERIOD,
                                                'query': query,
                                                'request': request })
 

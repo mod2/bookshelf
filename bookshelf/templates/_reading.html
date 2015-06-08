@@ -1,6 +1,6 @@
 {% load strip_time %}
 
-<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container{% if not reading.finished_date and stale_period != 0 and reading.days_since_last_entry > stale_period %} stale{% endif %}">
+<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container{% if not reading.finished_date and reading.get_stale_period != 0 and reading.days_since_last_entry > reading.get_stale_period %} stale{% endif %}">
 	{% if not reading.finished_date %}
 	<div class="entry">
 		<section class="page_number">{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% else %}—{% endif %}</section>
