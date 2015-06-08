@@ -50,7 +50,7 @@ class Reading(models.Model):
 
     order = models.PositiveSmallIntegerField(default=100)
 
-    stale_period = models.PositiveSmallIntegerField(default=-1)
+    stale_period = models.PositiveSmallIntegerField(default=0)
 
     folder = models.ForeignKey('Folder', null=True, blank=True, related_name='readings')
 
