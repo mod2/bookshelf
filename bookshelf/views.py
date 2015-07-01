@@ -11,6 +11,7 @@ from datetime import datetime, timedelta, time
 import calendar
 
 from .models import Book, Reading, Entry, Folder
+from .utils import get_stats_for_range
 
 import json
 
@@ -24,9 +25,20 @@ def dashboard(request):
     folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
     total = len(Reading.objects.filter(owner=request.user, status='active'))
 
+    # Get this month's stats
+    current_tz = timezone.get_current_timezone()
+    now = datetime.now()
+    year = now.year
+    month = now.month
+    month_beginning = datetime(year, month, 1, tzinfo=current_tz)
+    month_end = datetime(year, month, calendar.monthrange(year, month)[1], 23, 59, tzinfo=current_tz)
+    month_data = get_stats_for_range(request, month_beginning, month_end)
+    month_data['label'] = "{} {}".format(calendar.month_name[month], year)
+
     return render_to_response('dashboard.html', {'folders': folders,
                                               'folder': folder,
                                               'folderless': folderless,
+                                              'month': month_data,
                                               'total': total,
                                               'request': request })
 
@@ -234,42 +246,6 @@ def history(request):
 
 @login_required
 def stats(request):
-    def get_stats_for_range(beginning, end):
-        # Convert to UTC
-        tz = timezone.get_current_timezone()
-        d_tz = tz.normalize(beginning)
-        beginning_utc = d_tz.astimezone(utc)
-        d_tz = tz.normalize(end)
-        end_utc = d_tz.astimezone(utc)
-
-        # Get entries for the range
-        entries = Entry.objects.filter(owner=request.user, date__gte=beginning_utc, date__lte=end_utc)
-
-        # Pages read is just a sum of the entry amounts
-        pages = sum(e.num_pages for e in entries)
-
-        # Get books started/finished/abandoned during this range
-        finished = Reading.objects.filter(owner=request.user, finished_date__gte=beginning_utc, finished_date__lte=end_utc, status='finished')
-        started = Reading.objects.filter(owner=request.user, started_date__gte=beginning_utc, started_date__lte=end_utc)
-        abandoned = started.filter(status='abandoned')
-
-        # Percentage
-        if len(started) > 0:
-            abandoned_percentage = (len(abandoned) / len(started) * 100.0)
-        else:
-            abandoned_percentage = 0
-
-        return {
-            'pages': pages,
-            'finished': len(finished),
-            'finished_titles': '; '.join([b.book.title for b in finished.order_by('finished_date')]),
-            'started': len(started),
-            'started_titles': '; '.join([b.book.title for b in started.order_by('started_date')]),
-            'abandoned': len(abandoned),
-            'abandoned_titles': '; '.join([b.book.title for b in abandoned.order_by('started_date')]),
-            'abandoned_percentage': abandoned_percentage,
-        }
-
     current_tz = timezone.get_current_timezone()
 
     total = len(Reading.objects.filter(owner=request.user, status='active'))
@@ -290,7 +266,7 @@ def stats(request):
         year_beginning = datetime(y, 1, 1, tzinfo=current_tz)
         year_end = datetime(y, 12, 31, 23, 59, tzinfo=current_tz)
 
-        year = get_stats_for_range(year_beginning, year_end)
+        year = get_stats_for_range(request, year_beginning, year_end)
         year['label'] = y
 
         years.append(year)
@@ -313,7 +289,7 @@ def stats(request):
             month_beginning = datetime(y, m, 1, tzinfo=current_tz)
             month_end = datetime(y, m, calendar.monthrange(y, m)[1], 23, 59, tzinfo=current_tz)
 
-            month = get_stats_for_range(month_beginning, month_end)
+            month = get_stats_for_range(request, month_beginning, month_end)
 
             month['label'] = "{} {}".format(month_name[m - 1], y)
 

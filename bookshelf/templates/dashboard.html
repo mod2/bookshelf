@@ -1,6 +1,23 @@
 {% extends 'folder.html' %}
+{% load humanize %}
 
 {% block main %}
+
+{% if month %}
+<ul class="stats container dashboard">
+	<li>
+		<span class="label">{{ month.label }}</span>
+		<span class="group">
+			<span class="pages"><b>{{ month.pages|intcomma }}</b> pages</span>
+			<span class="finished" title="{{ month.finished_titles }}"><b>{{ month.finished }}</b> finished</span>
+		</span>
+		<span class="group">
+			<span class="started" title="{{ month.started_titles }}"><b>{{ month.started }}</b> started</span>
+			<span class="abandoned" title="{{ month.abandoned_titles }}"><b>{{ month.abandoned }}</b> abandoned ({{ month.abandoned_percentage|floatformat:0 }}%)</span>
+		</span>
+	</li>
+</ul>
+{% endif %}
 
 {% if folderless %}
 <div class="folder">

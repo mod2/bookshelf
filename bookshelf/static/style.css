@@ -1218,6 +1218,20 @@ ul.stats li span.group .abandoned b {
 	color: #888;
 }
 
+ul.stats.dashboard {
+	margin-bottom: 1.5em;
+}
+
+ul.stats.dashboard li {
+	padding-top: 0;
+}
+
+@media screen and (min-width: 700px) {
+	ul.stats.dashboard {
+		padding-bottom: 10px;
+	}
+}
+
 
 /* Media queries */
 @media screen and (min-width: 1100px) {
