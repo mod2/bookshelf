@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render_to_response
 from django.db.models import Q
 from django.utils import timezone
-from django.utils.timezone import utc
+from django.utils.timezone import utc, make_aware
 from datetime import datetime, timedelta, time
 import calendar
 
@@ -235,15 +235,22 @@ def history(request):
 @login_required
 def stats(request):
     def get_stats_for_range(beginning, end):
+        # Convert to UTC
+        tz = timezone.get_current_timezone()
+        d_tz = tz.normalize(beginning)
+        beginning_utc = d_tz.astimezone(utc)
+        d_tz = tz.normalize(end)
+        end_utc = d_tz.astimezone(utc)
+
         # Get entries for the range
-        entries = Entry.objects.filter(owner=request.user, date__gte=beginning, date__lte=end)
+        entries = Entry.objects.filter(owner=request.user, date__gte=beginning_utc, date__lte=end_utc)
 
         # Pages read is just a sum of the entry amounts
         pages = sum(e.num_pages for e in entries)
 
         # Get books started/finished/abandoned during this range
-        finished = Reading.objects.filter(owner=request.user, finished_date__gte=beginning, finished_date__lte=end, status='finished')
-        started = Reading.objects.filter(owner=request.user, started_date__gte=beginning, started_date__lte=end)
+        finished = Reading.objects.filter(owner=request.user, finished_date__gte=beginning_utc, finished_date__lte=end_utc, status='finished')
+        started = Reading.objects.filter(owner=request.user, started_date__gte=beginning_utc, started_date__lte=end_utc)
         abandoned = started.filter(status='abandoned')
 
         # Percentage
@@ -263,6 +270,8 @@ def stats(request):
             'abandoned_percentage': abandoned_percentage,
         }
 
+    current_tz = timezone.get_current_timezone()
+
     total = len(Reading.objects.filter(owner=request.user, status='active'))
 
     all_entries = Entry.objects.filter(owner=request.user).order_by('date')
@@ -278,8 +287,8 @@ def stats(request):
     # Get the years
     years = []
     for y in range(start_year, end_year + 1):
-        year_beginning = datetime(y, 1, 1)
-        year_end = datetime(y, 12, 31)
+        year_beginning = datetime(y, 1, 1, tzinfo=current_tz)
+        year_end = datetime(y, 12, 31, 23, 59, tzinfo=current_tz)
 
         year = get_stats_for_range(year_beginning, year_end)
         year['label'] = y
@@ -301,8 +310,8 @@ def stats(request):
                 if m < start_month:
                     continue
 
-            month_beginning = datetime(y, m, 1)
-            month_end = datetime(y, m, calendar.monthrange(y, m)[1])
+            month_beginning = datetime(y, m, 1, tzinfo=current_tz)
+            month_end = datetime(y, m, calendar.monthrange(y, m)[1], 23, 59, tzinfo=current_tz)
 
             month = get_stats_for_range(month_beginning, month_end)
 

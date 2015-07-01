@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'bookshelf',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
