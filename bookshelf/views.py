@@ -33,7 +33,7 @@ def dashboard(request):
     month_beginning = datetime(year, month, 1, tzinfo=current_tz)
     month_end = datetime(year, month, calendar.monthrange(year, month)[1], 23, 59, tzinfo=current_tz)
     month_data = get_stats_for_range(request, month_beginning, month_end)
-    month_data['label'] = "{} {}".format(calendar.month_name[month], year)
+    month_data['label'] = "{} {}".format(calendar.month_abbr[month], year)
 
     return render_to_response('dashboard.html', {'folders': folders,
                                               'folder': folder,
