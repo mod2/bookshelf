@@ -5,8 +5,13 @@
 	<div class="entry">
 		<section class="page_number">{% if reading.latest_entry %}{{ reading.latest_entry.page_number }}{% else %}—{% endif %}</section>
 		<section class="sub">
+        {% if reading.goal_date %}
+            <span class="left">Read to page <span class="pages">{{ reading.read_to_page_for_goal }}</span></span>
+			<span class="label">(pages per day: <span class="total" >{{ reading.pages_per_day_for_goal }})</span></span>
+        {% else %}
 			<span class="left"><span class="pages">{{ reading.pages_left }}</span> to go</span>
 			<span class="label">(end: <span class="total" data-end-page="{{ reading.end_page }}">{{ reading.end_page }})</span></span>
+        {% endif %}
 		</section>
 	</div>
 	{% endif %}

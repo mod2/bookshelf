@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.timezone import utc
 import datetime
 from datetime import timedelta
+import math
 
 class Book(models.Model):
     STATUSES = (
@@ -96,6 +97,18 @@ class Reading(models.Model):
         else:
             return 0
 
+    def pages_per_day_for_goal(self):
+        days = self.days_left_to_goal()
+        pages = self.pages_left()
+        if days > 0:
+            return round(pages / days, 1)
+        else:
+            return pages
+
+    def read_to_page_for_goal(self):
+        current_page = self.current_page()
+        return math.ceil(current_page + self.pages_per_day_for_goal())
+
     def days_elapsed(self):
         first_entry = self.entries.last().date.replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
         today = datetime.datetime.now().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
@@ -105,8 +118,12 @@ class Reading(models.Model):
     def days_since_last_entry(self):
         last_entry = self.entries.first().date.replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
         today = datetime.datetime.utcnow().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
-        
+
         return (today - last_entry).days
+
+    def days_left_to_goal(self):
+        today = datetime.date.today()
+        return (self.goal_date - today).days
 
     def get_stale_period(self):
         from django.conf import settings

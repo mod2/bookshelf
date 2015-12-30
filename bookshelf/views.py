@@ -111,11 +111,11 @@ def book(request, book_slug, reading_id):
             last_date = date_key
     else:
         entrydata = {}
-    
+
     # Sort the date list
     if 'list' in entrydata:
         new_list = []
-        
+
         for x in entrydata['list']:
             new_list.append({
                 'date': x,
