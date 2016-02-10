@@ -24,7 +24,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=20, null=True, blank=True)
     owner = models.ForeignKey(User, default=1)
 
-    tags = models.ManyToManyField('Tag', null=True, blank=True)
+    tags = models.ManyToManyField('Tag', blank=True)
 
     def __str__(self):
         return self.title
@@ -55,7 +55,7 @@ class Reading(models.Model):
 
     folder = models.ForeignKey('Folder', null=True, blank=True, related_name='readings')
 
-    tags = models.ManyToManyField('Tag', null=True, blank=True)
+    tags = models.ManyToManyField('Tag', blank=True)
 
     def __str__(self):
         return "Reading for {}".format(self.book.title)

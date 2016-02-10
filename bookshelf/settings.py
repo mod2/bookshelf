@@ -22,8 +22,6 @@ SECRET_KEY = 'p==0*j+#pg-jasfs85x@s&4b6hyof0fkar%kknw@-ptsj%vh1%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -54,6 +52,26 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'bookshelf.urls'
 
 WSGI_APPLICATION = 'bookshelf.wsgi.application'
+
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [os.path.join(BASE_DIR, 'templates')],
+    'OPTIONS': {
+        'debug': False,
+        'loaders': [
+            ('django.template.loaders.cached.Loader', [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ]),
+        ],
+        'context_processors': [
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+        ],
+    },
+}]
 
 
 # Database
