@@ -35,7 +35,7 @@
 <div class="folder">
 	<h2 class="container">{{ folder.name }}</h2>
 	<ul class="booklist">
-	{% for reading in folder.active_readings.all %}
+	{% for reading in folder.active_readings %}
 		{% include '_reading.html' %}
 	{% endfor %}
 	</ul>

@@ -116,10 +116,13 @@ class Reading(models.Model):
         return (today - first_entry).days
 
     def days_since_last_entry(self):
-        last_entry = self.entries.first().date.replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
-        today = datetime.datetime.utcnow().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        if len(self.entries.all()) > 0:
+            last_entry = self.entries.first().date.replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
+            today = datetime.datetime.utcnow().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
 
-        return (today - last_entry).days
+            return (today - last_entry).days
+        else:
+            return 0
 
     def days_left_to_goal(self):
         today = datetime.date.today()
@@ -139,7 +142,7 @@ class Reading(models.Model):
     def stale(self):
         stale_period = self.get_stale_period()
 
-        if not reading.finished_date and stale_period != 0 and self.days_since_last_entry() > stale_period:
+        if not self.finished_date and stale_period != 0 and self.days_since_last_entry() > stale_period:
             return True
 
         return False
@@ -214,7 +217,11 @@ class Folder(models.Model):
         return self.name
 
     def active_readings(self):
-        return self.readings.filter(status='active')
+        readings = self.readings.filter(status='active')
+        readings = sorted(readings, key=lambda k: 1000 - k.days_since_last_entry())
+        readings = sorted(readings, key=lambda k: 100 - k.percentage())
+        readings = sorted(readings, key=lambda k: 1 - k.stale())
+        return readings
 
     class Meta:
         ordering = ['order']

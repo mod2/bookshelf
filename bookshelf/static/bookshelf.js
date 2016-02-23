@@ -136,6 +136,7 @@ $(document).ready(function() {
 		},
 	});
 
+	/*
 	$("ul.booklist:not(.history)").sortable({
 		placeholder: "placeholder container",
 		update: function(event, ui) {
@@ -158,6 +159,7 @@ $(document).ready(function() {
 			});
 		},
 	});
+	*/
 
 
 	// Adding a book

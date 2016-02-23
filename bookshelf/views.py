@@ -132,7 +132,6 @@ def book(request, book_slug, reading_id):
                                             'total': total,
                                             'request': request })
 
-
 @login_required
 def folder(request, folder_slug):
     folder = Folder.objects.get(slug=folder_slug, owner=request.user)
@@ -202,7 +201,6 @@ def add_book(request):
             response = { 'status': 500, 'message': "Couldn't add book" }
 
         return JsonResponse(response)
-
 
 @login_required
 def edit_book(request, book_slug):
