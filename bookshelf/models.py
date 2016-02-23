@@ -116,7 +116,7 @@ class Reading(models.Model):
         return (today - first_entry).days
 
     def days_since_last_entry(self):
-        if len(self.entries.all()) > 0:
+        if self.entries.count() > 0:
             last_entry = self.entries.first().date.replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
             today = datetime.datetime.utcnow().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
 
@@ -194,7 +194,7 @@ class Entry(models.Model):
             self.date = datetime.datetime.now()
 
         if not self.num_pages:
-            if len(self.reading.entries.all()) > 0:
+            if self.reading.entries.count() > 0:
                 self.num_pages = self.page_number - self.reading.entries.first().page_number
             else:
                 self.num_pages = self.page_number

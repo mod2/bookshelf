@@ -53,7 +53,7 @@ def book(request, book_slug, reading_id):
     # And y is page_number for that day (or last page number)
     # Maybe chart the growth in a different color?
 
-    if len(reading.entries.all()) > 0:
+    if reading.entries.count() > 0:
         start_date = reading.started_date
         if reading.finished_date:
             end_date = reading.finished_date
