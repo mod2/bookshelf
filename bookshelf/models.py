@@ -218,9 +218,13 @@ class Folder(models.Model):
 
     def active_readings(self):
         readings = self.readings.filter(status='active')
-        readings = sorted(readings, key=lambda k: 1000 - k.days_since_last_entry())
-        readings = sorted(readings, key=lambda k: 100 - k.percentage())
+
+        # Sort by pages left (books with fewer pages left come first)
+        readings = sorted(readings, key=lambda k: k.pages_left())
+
+        # Now sort stale first
         readings = sorted(readings, key=lambda k: 1 - k.stale())
+
         return readings
 
     class Meta:
