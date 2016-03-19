@@ -222,6 +222,9 @@ class Folder(models.Model):
         # Sort by pages left (books with fewer pages left come first)
         readings = sorted(readings, key=lambda k: k.pages_left())
 
+        # Now sort by days since last entry
+        readings = sorted(readings, key=lambda k: 100000 - k.days_since_last_entry())
+
         # Now sort stale first
         readings = sorted(readings, key=lambda k: 1 - k.stale())
 
