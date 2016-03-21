@@ -124,6 +124,16 @@ class Reading(models.Model):
         else:
             return 0
 
+    def days_since_last_entry_label(self):
+        days = self.days_since_last_entry()
+        
+        if days == 0:
+            return "today"
+        elif days == 1:
+            return "1 day ago"
+        else:
+            return "{} days ago".format(days)
+
     def days_left_to_goal(self):
         today = datetime.date.today()
         return (self.goal_date - today).days
