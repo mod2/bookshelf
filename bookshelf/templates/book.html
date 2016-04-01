@@ -17,7 +17,7 @@
 		</section>
 	</div>
 
-	<h1>{{ book.title }}</h1>
+    <h1>{{ book.title }} <a class="edit" href="{% url 'edit_book' reading.id %}">edit</a></h1>
 	{% if book.author %}<h2>{{ book.author }}</h2>{% endif %}
 
 	{% if reading.tags.all %}
@@ -89,11 +89,6 @@
 	</ul>	
 </section>
 {% endif %}
-
-<section class="detail edit container">
-	<a href="{% url 'admin:bookshelf_reading_change' reading.id %}" target="_new">Edit Reading</a>
-	<a href="{% url 'admin:bookshelf_book_change' book.id %}" target="_new">Edit Book</a>
-</section>
 
 {% endblock main %}
 

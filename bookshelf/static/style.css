@@ -611,6 +611,16 @@ form .group.optional input[type=number] {
 	width: 2.25em;
 }
 
+form .group.links a {
+	color: #999;
+	margin-right: 15px;
+	text-decoration: none;
+}
+
+form .group.links a:hover {
+	color: #111;
+}
+
 
 /* Login page */
 /* -------------------------------------------------- */
@@ -624,24 +634,23 @@ form.login {
 /* Add book */
 /* -------------------------------------------------- */
 
-form#add-book-form .group + .group {
+form.book-form .group + .group {
 	margin-top: .75em;
 }
 
-form#add-book-form .group.submit {
+form.book-form .group.submit {
 	margin-top: 1.25em;
 }
 
-
-form#add-book-form input[name=title] {
+form.book-form input[name=title] {
 	width: 100%;
 }
 
-form#add-book-form input[name=author] {
+form.book-form input[name=author] {
 	width: 80%;
 }
 
-form#add-book-form select {
+form.book-form select {
 	border: solid 1px #bbb;
 	border-radius: 2px;
 	font-size: 1em;
@@ -746,6 +755,18 @@ form#add-book-form select {
 	color: #333;
 	font-weight: 600;
 	margin: 0;
+}
+
+.detail.info h1 a.edit {
+	color: #999;
+	font-size: .7em;
+	font-weight: normal;
+	margin-left: 3px;
+	text-decoration: none;
+}
+
+.detail.info h1 a.edit:hover {
+	color: #444;
 }
 
 .detail.info h2 {

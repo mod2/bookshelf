@@ -1,41 +1,50 @@
 {% extends '_base.html' %}
 
 {% block main %}
-<h1 class="container">Add Book</h1>
+<h1 class="container">{% if book %}Edit Book{% else %}Add Book{% endif %}</h1>
 
-<form id="add-book-form" class="container">
+<form id="{% if book %}edit{% else %}add{% endif %}-book-form" class="book-form container" {% if book %}data-uri="{% url 'edit_book' reading.id %}"{% else %}data-uri="{% url 'add_book' %}"{% endif %}>
 	<div class="group">
 		<label>Title</label>
-		<input type="text" name="title" autofocus />
+		<input type="text" name="title" autofocus {% if book.title %}value="{{ book.title }}"{% endif %}/>
 	</div>
 
 	<div class="group">
 		<label>Author</label>
-		<input type="text" name="author" />
+		<input type="text" name="author" {% if book.author %}value="{{ book.author }}"{% endif %}/>
 	</div>
 
 	<div class="group">
 		<label># Pages</label>
-		<input type="number" name="num_pages" />
+		<input type="number" name="num_pages" {% if reading.end_page %}value="{{ reading.end_page }}"{% endif %}/>
 	</div>
 
 	<div class="group">
 		<label>Tags</label>
 		<select id="tags" name="tags" multiple="multiple">
 			{% for t in tags %}
-			<option value="{{ t.slug }}">{{ t.name }}</option>
+			<option value="{{ t.slug }}"{% if t.slug in reading.taglist %} selected="selected"{% endif %}>{{ t.name }}</option>
 			{% endfor %}
 		</select>
 	</div>
 
 	<div class="group submit">
-		<input type="submit" value="Add Book" class="button" />
+		<input type="submit" value="{% if book %}Save Changes{% else %}Add Book{% endif %}" class="button" />
 	</div>
 
 	<div class="group optional">
 		<label>Starting Page</label>
-		<input type="number" name="starting_page" />
+		<input type="number" name="starting_page" {% if reading.starting_page %}value="{{ reading.starting_page }}"{% endif %} />
 	</div>
+
+	{% if book %}
+	<div class="group optional links">
+		<a id="book-detail-link" href="{% url 'book' book.slug reading.id %}">Book Detail</a>
+		<a href="{% url 'admin:bookshelf_reading_change' reading.id %}" target="_new">Edit Reading</a>
+		<a href="{% url 'admin:bookshelf_book_change' book.id %}" target="_new">Edit Book</a>
+		<a id="abandon-book-link" href="{% url 'abandon_book' reading.id %}">Abandon Book</a>
+	</div>
+	{% endif %}
 </form>
 
 {% endblock main %}

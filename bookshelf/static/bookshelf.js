@@ -129,34 +129,16 @@ $(document).ready(function() {
 		},
 	});
 
-	/*
-	$("ul.booklist:not(.history)").sortable({
-		placeholder: "placeholder container",
-		update: function(event, ui) {
-			var order = [];
-			var items = ui.item.parents("ul.booklist").find("li");
+	// Adding and editing books
+	$("#add-book-form, #edit-book-form").on("submit", function() {
+		var uri = $(this).data("uri");
 
-			for (var i=0; i<items.length; i++) {
-				var item = $(items[i]);
-				order.push(item.attr("data-reading-id"));
-			}
+		if ($(this).attr("id") == "edit-book-form") {
+			var editing = true;
+		} else {
+			var editing = false;
+		}
 
-			$.ajax({
-				url: '/api/reading/update-order/?order=' + order,
-				method: 'POST',
-				success: function(data) {
-				},
-				error: function(data) {
-					console.log("Error! :(", data);
-				},
-			});
-		},
-	});
-	*/
-
-
-	// Adding a book
-	$("#add-book-form").on("submit", function() {
 		var starting_page = $(this).find("input[name=starting_page]").val().trim();
 		starting_page = (starting_page != '') ? parseInt(starting_page) : 1;
 
@@ -175,11 +157,35 @@ $(document).ready(function() {
 		};
 
 		$.ajax({
-			url: '/add/',
+			url: uri,
 			method: 'POST',
 			data: data,
 			success: function(data) {
-				console.log("success", data);
+				if (editing) {
+					// Redirect to book detail
+					window.location.href = $("#book-detail-link").attr("href");
+				} else {
+					// Adding
+					window.location.href = "/";
+				}
+			},
+			error: function(data) {
+				console.log("Error! :(", data);
+			},
+		});
+
+		return false;
+	});
+
+	// Abandoning books
+	$("#abandon-book-link").on("click", function() {
+		var uri = $(this).attr("href");
+
+		$.ajax({
+			url: uri,
+			method: 'POST',
+			success: function(data) {
+				// Redirect to home
 				window.location.href = "/";
 			},
 			error: function(data) {

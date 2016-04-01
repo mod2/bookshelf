@@ -197,14 +197,71 @@ def add_book(request):
         return JsonResponse(response)
 
 @login_required
-def edit_book(request, book_slug):
-    book = Book.objects.get(slug=book_slug)
-    total = Reading.objects.filter(owner=request.user, status='active').count()
+def edit_book(request, reading_id):
+    reading = Reading.objects.get(id=reading_id)
 
-    return render_to_response('book.html', {'book': book,
-                                            'title': '{} — Edit'.format(book.title),
+    if request.method == 'GET':
+        total = Reading.objects.filter(owner=request.user, status='active').count()
+        tags = Tag.objects.all()
+
+        return render_to_response('add.html', {'reading': reading,
+                                            'book': reading.book,
+                                            'tags': tags,
+                                            'title': '{} — Edit'.format(reading.book.title),
                                             'total': total,
                                             'request': request })
+    elif request.method == 'POST':
+        try:
+            title = request.POST.get('title', '')
+            author = request.POST.get('author', '')
+            num_pages = int(request.POST.get('num_pages', 0))
+            starting_page = int(request.POST.get('starting_page', 1))
+            tags = request.POST.getlist('tags[]')
+
+            # Update the book
+            book = reading.book
+            if title != book.title and title != '':
+                book.title = title
+            if author != book.author and author != '':
+                book.author = author
+            book.save()
+
+            # Update the reading
+            reading.start_page = starting_page
+            reading.end_page = num_pages
+
+            reading.tags.clear()
+            # Add tags
+            for tag in tags:
+                # Strip off initial # if it's there
+                if tag[0] == '#':
+                    tag = tag[1:]
+
+                t = Tag.objects.get(slug=tag)
+                reading.tags.add(t)
+
+            reading.save()
+
+            # Return the book and reading IDs
+            response = { 'status': 200, 'reading_id': reading.id, 'book_id': book.id }
+        except Exception as e:
+            response = { 'status': 500, 'message': "Couldn't save book" }
+
+        return JsonResponse(response)
+
+@login_required
+def abandon_book(request, reading_id):
+    try:
+        reading = Reading.objects.get(id=reading_id)
+        reading.status = 'abandoned'
+        reading.save()
+
+        # Return the book and reading IDs
+        response = { 'status': 200, 'reading_id': reading.id }
+    except Exception as e:
+        response = { 'status': 500, 'message': "Couldn't abandon book" }
+
+    return JsonResponse(response)
 
 @login_required
 def search(request):

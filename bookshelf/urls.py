@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^logout/', auth_views.logout, { 'template_name': 'logout.html', 'next_page': '/login/' }, name='logout'),
 
     url(r'^book/(.+?)/edit/$', bookshelf_views.edit_book, name='edit_book'),
+    url(r'^book/(.+?)/abandon/$', bookshelf_views.abandon_book, name='abandon_book'),
     url(r'^book/(.+?)/(.+?)/$', bookshelf_views.book, name='book'),
     url(r'^$', bookshelf_views.dashboard, name='dashboard'),
 

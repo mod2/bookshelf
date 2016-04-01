@@ -178,6 +178,11 @@ class Reading(models.Model):
 
         return response
 
+    def taglist(self):
+        """ Returns a list of the tag slugs applied to this reading. """
+
+        return [t.slug for t in self.tags.all()]
+
     class Meta:
         ordering = ['order', 'started_date']
 
