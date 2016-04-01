@@ -25,43 +25,29 @@ $(document).ready(function() {
 
 	// Entry adding
 	$(".entry").on("click", function() {
-		// Only show if it's not already open
-		if ($("#add-entry-modal:visible").length == 0) {
-			// On click, populate the dialog and pull it up
-			var book = $(this).parents("li:first");		
-			if (book.length > 0) {
-				var readingId = book.attr("data-reading-id");
-			} else {
-				var readingId = $(".detail.info").attr("data-reading-id");
-			}
+		var panel = $(this).siblings(".add-entry");
 
-			var currentPageNumber = $(this).find(".page_number");
-			var endPage = $(this).find(".total").attr("data-end-page");
-			var title = book.find(".title").html();
-
-			$("#add-entry-modal").attr("data-reading-id", readingId);
-			$("#add-entry-modal .end-page").html(endPage);
-			$("#add-entry-modal .title").html(title);
-
-			$("#add-entry-modal").slideDown(150);
-
-			$("#entry-box").focus();
-		}
+		panel.fadeIn(150, function() {
+			panel.find("#entry-box").focus();
+		});
 
 		return false;
 	});
 
-	$(".modal .cancel-link").on("click", function() {
-		$(".modal").slideUp(150);
+	$(".add-entry .cancel-link").on("click", function() {
+		$(this).closest(".add-entry").fadeOut(150);
+
+		return false;
 	});
 
 
 	// Adding an entry
 	
-	$("form#add-entry-modal").on("submit", function() {
+	$("form.add-entry").on("submit", function() {
 		var pageNumber = parseInt($(this).find("#entry-box").val().trim());
 		var comment = $(this).find("textarea#comment").val().trim();
-		var readingId = parseInt($(this).attr("data-reading-id"));
+		var reading = $(this).closest("li.reading");
+		var readingId = parseInt(reading.attr("data-reading-id"));
 
 		if ((pageNumber || comment) && readingId) {
 			data = {
@@ -79,7 +65,7 @@ $(document).ready(function() {
 
 					// Update the entry
 					if ($("ul.booklist").length) {
-						var reading = $("ul.booklist li[data-reading-id=" + data.reading_id + "]");
+						var reading = $("li.reading[data-reading-id=" + data.reading_id + "]");
 						reading.removeClass("stale");
 						deleteReading = true;
 					} else {
@@ -91,15 +77,22 @@ $(document).ready(function() {
 					reading.find(".entry .sub .pages").html(data.pages_left);
 					reading.find(".stale").slideUp(150);
 
-					// Close the modal and clear it
-					$("#add-entry-modal").slideUp(150);
-					$("#add-entry-modal #entry-box").val('');
-					$("#add-entry-modal textarea#comment").val('');
+					// Close the panel and clear it
+					var panel = reading.find(".add-entry");
+					panel.slideUp(150, function() {
+						panel.find("#entry-box").val('');
+						panel.find("textarea#comment").val('');
+					});
 
 					// If finished, hide it
 					if (data.pages_left == 0 && deleteReading) {
-						reading.slideUp(200, function() {
+						reading.fadeOut(200, function() {
 							$(this).remove();
+						});
+					} else {
+						// If not finished, move it to the bottom
+						reading.fadeOut(200, function() {
+							$(this).remove().appendTo("ul.booklist").fadeIn(200);
 						});
 					}
 				},

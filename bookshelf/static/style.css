@@ -360,8 +360,8 @@ ul.booklist li .stale {
 }
 
 ul.booklist li .entry:hover .page_number {
-	background: #e4f0ca;
-	color: #4b690e;
+	background: hsl(95, 47%, 81%);
+	color: hsl(95, 16%, 44%);
 }
 
 ul.booklist li.placeholder {
@@ -523,47 +523,6 @@ form.modal input[name=tags] {
 	font-size: 1em;
 }
 
-form.modal ul.tagit {
-	border-color: #bbb;
-	border-radius: 3px;
-	font-size: 1em;
-	margin-top: 0;
-	padding: 4px 5px;
-}
-
-form.modal ul.tagit li.tagit-choice .tagit-label:not(a) {
-	color: #222;
-}
-
-form.modal ul.tagit li.tagit-choice {
-	background-color: #d4efbc;
-	border-color: #d4efbc;
-	border-radius: 3px;
-}
-
-form.modal ul.tagit li.tagit-choice-editable {
-	font-size: .9em;
-	padding: 2px 20px 3px 6px;
-}
-
-form.modal ul.tagit li.tagit-choice .tagit-close {
-	margin-top: -9px;
-}
-
-form.modal ul.tagit li.tagit-choice .tagit-close .text-icon {
-	font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
-	color: #9ec78b;
-}
-
-form.modal ul.tagit input[type=text] {
-	font-size: .9em;
-	width: 100px;
-}
-
-form.modal ul.tagit li.tagit-new {
-	margin-top: 0;
-}
-
 form.modal.padless {
 	padding: 0;
 }
@@ -578,81 +537,6 @@ form.modal.padless .modal-group {
 		padding-left: 25px;
 		padding-right: 25px;
 	}
-}
-
-
-form.modal#add-entry-modal {
-	position: fixed;
-}
-
-form.modal#add-entry-modal header {
-	background: #326299;
-	border-radius: 5px 5px 0 0;
-}
-
-form.modal#add-entry-modal .cancel-link {
-	color: #b7e1ff;
-	margin-top: 15px;
-}
-
-form.modal#add-entry-modal .cancel-link:hover {
-	color: #fff;
-}
-
-form.modal#add-entry-modal h2 {
-	color: #b7e1ff;
-	font-size: 1.2em;
-	display: inline-block;
-	margin: 0;
-	margin-right: 8px;
-	position: relative;
-	top: -5px;
-}
-
-form.modal#add-entry-modal #entry-box {
-	-moz-appearance: textfield;
-	background: rgba(0, 0, 0, 0.4);
-	border: none;
-	border-radius: 3px;
-	color: #fff;
-	font-size: 1.4em;
-	margin: 8px 3px;
-	padding: 2px 6px;
-	position: relative;
-	top: 5px;
-	width: 2.5em;
-}
-
-form.modal#add-entry-modal .comment label {
-	color: #a5b8c7;
-	font-size: .8em;
-	margin-bottom: 5px;
-}
-
-form.modal#add-entry-modal .comment label .title {
-	font-style: italic;
-}
-
-form.modal#add-entry-modal .comment textarea#comment {
-	border: none;
-	font-size: 1em;
-	min-height: 4em;
-	max-height: initial;
-	padding: 0;
-	resize: none;
-}
-
-form.modal#add-entry-modal .modal-group.save {
-	background: #eee;
-	border-radius: 0 0 5px 5px;
-	overflow: hidden;
-	padding-top: 8px;
-	padding-bottom: 8px;
-}
-
-form.modal#add-entry-modal .modal-group.save input[type=submit] {
-	float: right;
-	margin-top: 0;
 }
 
 
@@ -1124,45 +1008,108 @@ form#add-book-form select {
 }
 
 
-/* Organize page */
+/* Add entry */
 /* -------------------------------------------------- */
 
-.folders .folder-item {
-	overflow: hidden;
-	padding: 9px 0;
+.reading .add-entry {
+	display: none;
+	margin-bottom: 5px;
+	margin-top: 23px;
 }
 
-.folders .folder-item a {
-	color: #444;
+.reading .add-entry .cancel-link {
+	color: hsl(95, 20%, 64%);
+	cursor: pointer;
+	float: right;
+	font-size: .8em;
+	padding: 5px 9px;
 	text-decoration: none;
 }
 
-.folders .folder-item h2 {
-	margin: 0;
-	padding: 0;
+.reading .add-entry .cancel-link:hover {
+	color: #000;
 }
 
-.folders .folder-item h3 {
-	color: #888;
-	font-size: .7em;
-	font-style: italic;
+.reading .add-entry header {
+	background: hsl(95, 47%, 81%);
+	border-radius: 5px 5px 0 0;
+	display: flex;
+	display: -webkit-flex;
+}
+
+.reading .add-entry h2 {
+	-webkit-flex: 1;
+	color: hsl(95, 23%, 43%);
+	flex: 1;
+	font-size: 1.2em;
 	font-weight: 400;
-	line-height: 1.1em;
+	display: inline-block;
 	margin: 0;
+	margin-right: 8px;
+	padding: 1px 11px 11px;
+	position: relative;
 }
 
-.folders .placeholder {
-	background: #eee;
-	height: 3em;
-}
-
-.folders .folder-item.ui-sortable-helper {
+.reading .add-entry #entry-box {
+	-moz-appearance: textfield;
 	background: #fff;
-	border-radius: 5px;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	border: none;
+	border-radius: 3px;
+	color: #444;
+	font-size: 1.4em;
+	margin: 0px 3px;
+	padding: 1px 6px 2px;
+	position: relative;
+	top: 5px;
+	width: 2.5em;
+}
+
+.reading .add-entry .comment {
+	border-left: solid 1px #eee;
+	border-right: solid 1px #eee;
+	padding: 5px 9px;
+}
+
+.reading .add-entry .comment label {
+	color: #ccc;
+	display: block;
+	font-size: .8em;
+	margin-bottom: 5px;
+}
+
+.reading .add-entry .comment label .title {
+	font-style: italic;
+}
+
+.reading .add-entry .comment textarea#comment {
+	border: none;
+	font-size: 1em;
+	min-height: 4em;
+	max-height: initial;
+	padding: 0;
+	resize: none;
+	width: 100%;
+}
+
+.reading .add-entry .comment textarea#comment:focus {
+	outline: none;
+}
+
+.reading .add-entry .group.save {
+	background: hsl(95, 47%, 81%);
+	border-radius: 0 0 5px 5px;
 	overflow: hidden;
-	padding: 12px;
-	max-width: 300px;
+	padding: 8px 9px;
+}
+
+.reading .add-entry .group.save input[type=submit].button {
+	background: #729C52;
+	float: right;
+	margin-top: 0;
+}
+
+.reading .add-entry .group.save input[type=submit].button:hover {
+	background: #444;
 }
 
 
@@ -1262,6 +1209,7 @@ ul.stats.dashboard li .label {
 
 	ul.booklist li {
 		display: flex;
+		flex-wrap: wrap;
 	}
 
 	ul.booklist li.container {
@@ -1345,5 +1293,10 @@ ul.stats.dashboard li .label {
 
 	ul.stats.dashboard li span.group {
 		margin-left: 30px;
+	}
+
+	.reading .add-entry {
+		flex: 100%;
+		order: 5;
 	}
 }
