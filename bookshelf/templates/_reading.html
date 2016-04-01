@@ -18,7 +18,8 @@
 
 	<a class="title" href="{% url 'book' reading.book.slug reading.id %}">
 		<span class="label title">{{ reading.book.title }}</span>
-		{% if reading.book.author and title == 'History' or results %}<span class="author">{{ reading.book.author }}</span>{% endif %}
+		{% for t in reading.tags.all %}<span class="tag tag-{{ t.slug }}" style="background: {{ t.color }};"></span>{% endfor %}
+		{% if reading.book.author %}{% if title == 'History' or results %}<span class="author">{{ reading.book.author }}</span>{% endif %}{% endif %}
 	</a>
 
 	<a class="metadata" href="{% url 'book' reading.book.slug reading.id %}">

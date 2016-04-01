@@ -36,9 +36,8 @@
 				<button type="submit" value="Search"><object type="image/svg+xml" data="{% static 'search.svg' %}">Search</object></button>
 			</form>
 
-			<a href="{% url 'dashboard' %}"{% if folder.slug == "dashboard" %}class="selected"{% endif %}>{{ total }} Current Book{% if total != 1 %}s{% endif %}</a>
+			<a href="{% url 'dashboard' %}"{% if title == "Dashboard" %}class="selected"{% endif %}>{{ total }} Current Book{% if total != 1 %}s{% endif %}</a>
 			<a class="add-book" href="{% url 'add_book' %}">+ Add Book</a>
-			<a href="{% url 'organize' %}">Organize</a>
 			<a href="{% url 'stats' %}">Stats</a>
 			<a href="{% url 'history' %}">History</a>
 			<a href="{% url 'admin:index' %}" target="_new">Admin</a>
@@ -67,6 +66,7 @@
 	<!-- Modal -->
 	<div class="background"></div>
 	{% block modal %}
+	{% include '_addentry.html' %}
 	{% endblock modal %}
 </body>
 </html>

@@ -12,17 +12,14 @@ urlpatterns = [
 
     url(r'^book/(.+?)/edit/$', bookshelf_views.edit_book, name='edit_book'),
     url(r'^book/(.+?)/(.+?)/$', bookshelf_views.book, name='book'),
-    url(r'^folder/(.+?)/$', bookshelf_views.folder, name='folder'),
     url(r'^$', bookshelf_views.dashboard, name='dashboard'),
 
-    url(r'^organize/$', bookshelf_views.organize, name='organize'),
     url(r'^add/$', bookshelf_views.add_book, name='add_book'),
     url(r'^search/$', bookshelf_views.search, name='search'),
     url(r'^history/$', bookshelf_views.history, name='history'),
     url(r'^stats/$', bookshelf_views.stats, name='stats'),
 
     # Web services
-    url(r'^api/folder/update-order/$', bookshelf_views.api_folder_update_order, name='api_folder_update_order'),
     url(r'^api/reading/update-order/$', bookshelf_views.api_reading_update_order, name='api_reading_update_order'),
     url(r'^api/reading/add-entry/$', bookshelf_views.api_reading_add_entry, name='api_reading_add_entry'),
     url(r'^api/search/$', bookshelf_views.api_search, name='api_search'),

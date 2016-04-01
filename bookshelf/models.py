@@ -53,8 +53,6 @@ class Reading(models.Model):
 
     stale_period = models.PositiveSmallIntegerField(default=0)
 
-    folder = models.ForeignKey('Folder', null=True, blank=True, related_name='readings')
-
     tags = models.ManyToManyField('Tag', blank=True)
 
     def __str__(self):
@@ -173,10 +171,6 @@ class Reading(models.Model):
                 'start_page': self.start_page,
                 'end_page': self.end_page,
                 'total_pages': self.total_pages(),
-                'folder': {
-                    'id': self.folder.id if self.folder else None,
-                    'name': self.folder.name if self.folder else None,
-                },
                 'tags': [t.name for t in self.tags.all()]
             }
         except Exception as e:
@@ -216,34 +210,6 @@ class Entry(models.Model):
         verbose_name_plural = "entries"
 
 
-class Folder(models.Model):
-    name = models.CharField(max_length=100)
-    slug = AutoSlugField(populate_from='name')
-    order = models.PositiveSmallIntegerField(default=100)
-    color = models.CharField(max_length=10, null=True, blank=True)
-    owner = models.ForeignKey(User, default=1)
-
-    def __str__(self):
-        return self.name
-
-    def active_readings(self):
-        readings = self.readings.filter(status='active')
-
-        # Sort by pages left (books with fewer pages left come first)
-        readings = sorted(readings, key=lambda k: k.pages_left())
-
-        # Now sort by days since last entry
-        readings = sorted(readings, key=lambda k: 100000 - k.days_since_last_entry())
-
-        # Now sort stale first
-        readings = sorted(readings, key=lambda k: 1 - k.stale())
-
-        return readings
-
-    class Meta:
-        ordering = ['order']
-
-
 class Tag(models.Model):
     name = models.CharField(max_length=100)
     slug = AutoSlugField(populate_from='name')
@@ -252,3 +218,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['slug']

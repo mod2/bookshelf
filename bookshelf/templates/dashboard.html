@@ -1,4 +1,4 @@
-{% extends 'folder.html' %}
+{% extends '_base.html' %}
 {% load humanize %}
 
 {% block main %}
@@ -19,28 +19,12 @@
 </ul>
 {% endif %}
 
-{% if folderless %}
 <div class="folder">
-	<h2 class="container">Unsorted</h2>
 	<ul class="booklist">
-	{% for reading in folderless %}
+	{% for reading in readings %}
 		{% include '_reading.html' %}
 	{% endfor %}
 	</ul>
 </div>
-{% endif %}
-
-{% for folder in folders %}
-{% if folder.active_readings %}
-<div class="folder">
-	<h2 class="container">{{ folder.name }}</h2>
-	<ul class="booklist">
-	{% for reading in folder.active_readings %}
-		{% include '_reading.html' %}
-	{% endfor %}
-	</ul>
-</div>
-{% endif %}
-{% endfor %}
 
 {% endblock main %}

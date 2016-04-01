@@ -20,11 +20,10 @@
 	</div>
 
 	<div class="group">
-		<label>Folder</label>
-		<select name="folder">
-			<option></option>
-			{% for f in folders %}
-			<option value="{{ f.slug }}">{{ f.name }}</option>
+		<label>Tags</label>
+		<select name="tags" multiple="multiple">
+			{% for t in tags %}
+			<option value="{{ t.slug }}">{{ t.name }}</option>
 			{% endfor %}
 		</select>
 	</div>

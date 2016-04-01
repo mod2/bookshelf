@@ -10,20 +10,29 @@ from django.utils.timezone import utc, make_aware
 from datetime import datetime, timedelta, time
 import calendar
 
-from .models import Book, Reading, Entry, Folder
+from .models import Book, Reading, Entry, Tag
 from .utils import get_stats_for_range
 
 import json
 
 @login_required
 def dashboard(request):
-    folders = Folder.objects.filter(owner=request.user)
-    folder = {
-        'slug': 'dashboard',
-    }
+    def active_readings():
+        readings = Reading.objects.filter(owner=request.user, status='active')
+        total = readings.count()
 
-    folderless = Reading.objects.filter(owner=request.user, folder=None, status='active')
-    total = len(Reading.objects.filter(owner=request.user, status='active'))
+        # Sort by pages left (books with fewer pages left come first)
+        readings = sorted(readings, key=lambda k: k.pages_left())
+
+        # Now sort by days since last entry
+        readings = sorted(readings, key=lambda k: 100000 - k.days_since_last_entry())
+
+        # Now sort stale first
+        readings = sorted(readings, key=lambda k: 1 - k.stale())
+
+        return readings, total
+
+    readings, total = active_readings()
 
     # Get this month's stats
     current_tz = timezone.get_current_timezone()
@@ -35,19 +44,18 @@ def dashboard(request):
     month_data = get_stats_for_range(request, month_beginning, month_end)
     month_data['label'] = "{} {}".format(calendar.month_abbr[month], year)
 
-    return render_to_response('dashboard.html', {'folders': folders,
-                                              'folder': folder,
-                                              'folderless': folderless,
-                                              'month': month_data,
-                                              'total': total,
-                                              'request': request })
+    return render_to_response('dashboard.html', {'readings': readings,
+                                                 'title': 'Dashboard',
+                                                 'month': month_data,
+                                                 'total': total,
+                                                 'request': request })
 
 @login_required
 def book(request, book_slug, reading_id):
     book = Book.objects.filter(slug=book_slug, owner=request.user)[0]
     reading = Reading.objects.get(id=reading_id, owner=request.user)
 
-    total = len(Reading.objects.filter(owner=request.user, status='active'))
+    total = Reading.objects.filter(owner=request.user, status='active').count()
 
     # TODO: Create chart where x = list of days from start_date to either now or finished_date
     # And y is page_number for that day (or last page number)
@@ -133,36 +141,14 @@ def book(request, book_slug, reading_id):
                                             'request': request })
 
 @login_required
-def folder(request, folder_slug):
-    folder = Folder.objects.get(slug=folder_slug, owner=request.user)
-    total = len(Reading.objects.filter(owner=request.user, status='active'))
-
-    return render_to_response('folder.html', {'folder': folder,
-                                              'title': folder.name,
-                                              'request': request })
-
-@login_required
-def organize(request):
-    folders = Folder.objects.filter(owner=request.user)
-    total = len(Reading.objects.filter(owner=request.user, status='active'))
-    folder = {
-        'slug': 'organize',
-    }
-
-    return render_to_response('organize.html', {'folders': folders,
-                                              'folder': folder,
-                                              'total': total,
-                                              'request': request })
-
-@login_required
 def add_book(request):
     if request.method == 'GET':
-        total = len(Reading.objects.filter(owner=request.user, status='active'))
-        folders = Folder.objects.filter(owner=request.user)
+        total = Reading.objects.filter(owner=request.user, status='active').count()
+        tags = Tag.objects.all()
 
         return render_to_response('add.html', {'title': 'Add Book',
                                                'total': total,
-                                               'folders': folders,
+                                               'tags': tags,
                                                'request': request })
     elif request.method == 'POST':
         try:
@@ -170,7 +156,7 @@ def add_book(request):
             author = request.POST.get('author', '')
             num_pages = int(request.POST.get('num_pages', 0))
             starting_page = int(request.POST.get('starting_page', 1))
-            folder = request.POST.get('folder', '')
+            tags = request.POST.get('tags', '')
 
             if title != '':
                 # Create the book
@@ -188,9 +174,17 @@ def add_book(request):
                 reading.started_date = datetime.now()
                 reading.start_page = starting_page
                 reading.end_page = num_pages
-                if folder:
-                    f = Folder.objects.get(slug=folder)
-                    reading.folder = f
+
+                # Add tags
+                if tags:
+                    for tag in tags.split(' '):
+                        # Strip off initial # if it's there
+                        if tag[0] == '#':
+                            tag = tag[1:]
+
+                        t = Tag.objects.get(slug=tag)
+                        reading.tags.add(t)
+
                 reading.save()
 
                 # Return the book and reading IDs
@@ -205,7 +199,7 @@ def add_book(request):
 @login_required
 def edit_book(request, book_slug):
     book = Book.objects.get(slug=book_slug)
-    total = len(Reading.objects.filter(owner=request.user, status='active'))
+    total = Reading.objects.filter(owner=request.user, status='active').count()
 
     return render_to_response('book.html', {'book': book,
                                             'title': '{} — Edit'.format(book.title),
@@ -216,7 +210,7 @@ def edit_book(request, book_slug):
 def search(request):
     query = request.GET.get('q', '')
 
-    total = len(Reading.objects.filter(owner=request.user, status='active'))
+    total = Reading.objects.filter(owner=request.user, status='active').count()
 
     if query != '':
         results = Reading.objects.filter(
@@ -232,7 +226,7 @@ def search(request):
 
 @login_required
 def history(request):
-    total = len(Reading.objects.filter(owner=request.user, status='active'))
+    total = Reading.objects.filter(owner=request.user, status='active').count()
     finished = Reading.objects.filter(owner=request.user, status='finished').order_by('-finished_date')
     abandoned = Reading.objects.filter(owner=request.user, status='abandoned').order_by('-started_date')
 
@@ -246,7 +240,7 @@ def history(request):
 def stats(request):
     current_tz = timezone.get_current_timezone()
 
-    total = len(Reading.objects.filter(owner=request.user, status='active'))
+    total = Reading.objects.filter(owner=request.user, status='active').count()
 
     all_entries = Entry.objects.filter(owner=request.user).order_by('date')
     first_entry = all_entries.first()
@@ -301,22 +295,6 @@ def stats(request):
                                              'months': months,
                                              'request': request })
 
-
-def api_folder_update_order(request):
-    order = request.GET.get('order', '')
-    slug_list = order.split(',')
-
-    try:
-        for s, folder_slug in enumerate(slug_list):
-            folder_slug = slug_list[s]
-            folder = Folder.objects.get(slug=folder_slug)
-            folder.order = s
-            folder.save()
-        response = { 'status': 200 }
-    except:
-        response = { 'status': 500, 'message': "Couldn't update orders" }
-
-    return JsonResponse(response)
 
 def api_reading_update_order(request):
     order = request.GET.get('order', '')

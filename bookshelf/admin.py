@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, Reading, Entry, Folder, Tag
+from .models import Book, Reading, Entry, Tag
 
 
 @admin.register(Book)
@@ -10,19 +10,13 @@ class BookAdmin(admin.ModelAdmin):
 
 @admin.register(Reading)
 class ReadingAdmin(admin.ModelAdmin):
-    list_display = ('book', 'status', 'started_date', 'finished_date', 'start_page', 'end_page', 'folder', 'owner')
+    list_display = ('book', 'status', 'started_date', 'finished_date', 'start_page', 'end_page', 'owner')
     pass
 
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
     list_display = ('reading', 'page_number', 'num_pages', 'date', 'comment', 'owner')
-    pass
-
-
-@admin.register(Folder)
-class FolderAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'color', 'order', 'owner')
     pass
 
 

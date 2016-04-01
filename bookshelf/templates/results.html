@@ -5,9 +5,7 @@
 <h1 class="container">{{ results|length }} result{% if results|length != 1 %}s{% endif %} for: <b>{{ query }}</b></h1>
 
 <ul class="booklist">
-{% for reading in results %}
-	<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="container">{% include '_reading.html' %}</li>
-{% endfor %}
+{% for reading in results %}{% include '_reading.html' %}{% endfor %}
 </ul>
 
 {% endblock main %}
