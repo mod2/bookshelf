@@ -160,12 +160,18 @@ $(document).ready(function() {
 		var starting_page = $(this).find("input[name=starting_page]").val().trim();
 		starting_page = (starting_page != '') ? parseInt(starting_page) : 1;
 
+		var selectedTags = $(this).find("select[name=tags] option:selected");
+		var tags = [];
+		for (var i=0; i<selectedTags.length; i++) {
+			tags.push($(selectedTags[i]).val());
+		}
+
 		data = {
 			title: $(this).find("input[name=title]").val().trim(),
 			author: $(this).find("input[name=author]").val().trim(),
 			num_pages: parseInt($(this).find("input[name=num_pages]").val().trim()),
 			starting_page: starting_page,
-			folder: $(this).find("select[name=folder]").val(),
+			tags: tags,
 		};
 
 		$.ajax({

@@ -21,7 +21,7 @@
 
 	<div class="group">
 		<label>Tags</label>
-		<select name="tags" multiple="multiple">
+		<select id="tags" name="tags" multiple="multiple">
 			{% for t in tags %}
 			<option value="{{ t.slug }}">{{ t.name }}</option>
 			{% endfor %}

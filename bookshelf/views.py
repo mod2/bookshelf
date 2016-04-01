@@ -156,7 +156,7 @@ def add_book(request):
             author = request.POST.get('author', '')
             num_pages = int(request.POST.get('num_pages', 0))
             starting_page = int(request.POST.get('starting_page', 1))
-            tags = request.POST.get('tags', '')
+            tags = request.POST.getlist('tags[]')
 
             if title != '':
                 # Create the book
@@ -174,16 +174,16 @@ def add_book(request):
                 reading.started_date = datetime.now()
                 reading.start_page = starting_page
                 reading.end_page = num_pages
+                reading.save()
 
                 # Add tags
-                if tags:
-                    for tag in tags.split(' '):
-                        # Strip off initial # if it's there
-                        if tag[0] == '#':
-                            tag = tag[1:]
+                for tag in tags:
+                    # Strip off initial # if it's there
+                    if tag[0] == '#':
+                        tag = tag[1:]
 
-                        t = Tag.objects.get(slug=tag)
-                        reading.tags.add(t)
+                    t = Tag.objects.get(slug=tag)
+                    reading.tags.add(t)
 
                 reading.save()
 
