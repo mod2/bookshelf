@@ -115,8 +115,8 @@ class Reading(models.Model):
 
     def days_since_last_entry(self):
         if self.entries.count() > 0:
-            last_entry = self.entries.first().date.replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
-            today = datetime.datetime.utcnow().replace(tzinfo=utc).replace(hour=0, minute=0, second=0, microsecond=0)
+            last_entry = self.entries.first().date.replace(tzinfo=utc).astimezone(tz=None).replace(hour=0, minute=0, second=0, microsecond=0)
+            today = datetime.datetime.utcnow().replace(tzinfo=utc).astimezone(tz=None).replace(hour=0, minute=0, second=0, microsecond=0)
 
             return (today - last_entry).days
         else:
