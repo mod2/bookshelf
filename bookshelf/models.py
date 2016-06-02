@@ -77,21 +77,33 @@ class Reading(models.Model):
 
         return page_num
 
-    def percentage(self):
+    def percentage(self, current_page=None, total_pages=None):
+        if current_page is None:
+            current_page = self.current_page()
+
+        if total_pages is None:
+            total_pages = self.total_pages()
+
         if self.end_page:
-            if self.current_page() < self.start_page:
+            if current_page < self.start_page:
                 return 0
 
-            return int(((self.current_page() - (self.start_page - 1)) / self.total_pages()) * 100.0)
+            return int(((current_page - (self.start_page - 1)) / total_pages) * 100.0)
         else:
             return 0
 
-    def pages_left(self):
-        if self.end_page:
-            if self.current_page() < self.start_page:
-                return self.total_pages()
+    def pages_left(self, current_page=None, total_pages=None):
+        if current_page is None:
+            current_page = self.current_page()
 
-            return self.end_page - self.current_page()
+        if total_pages is None:
+            total_pages = self.total_pages()
+
+        if self.end_page:
+            if current_page < self.start_page:
+                return total_pages
+
+            return self.end_page - current_page
         else:
             return 0
 
@@ -113,17 +125,21 @@ class Reading(models.Model):
 
         return (today - first_entry).days
 
-    def days_since_last_entry(self):
-        if self.entries.count() > 0:
-            last_entry = self.entries.first().date.replace(tzinfo=utc).astimezone(tz=None).replace(hour=0, minute=0, second=0, microsecond=0)
+    def days_since_last_entry(self, latest_entry=None):
+        if latest_entry is None and self.entries.count() > 0:
+            latest_entry = self.entries.first()
+
+        if latest_entry:
+            latest_entry = latest_entry.date.replace(tzinfo=utc).astimezone(tz=None).replace(hour=0, minute=0, second=0, microsecond=0)
             today = datetime.datetime.utcnow().replace(tzinfo=utc).astimezone(tz=None).replace(hour=0, minute=0, second=0, microsecond=0)
 
-            return (today - last_entry).days
+            return (today - latest_entry).days
         else:
             return 0
 
-    def days_since_last_entry_label(self):
-        days = self.days_since_last_entry()
+    def days_since_last_entry_label(self, days=None):
+        if days is None:
+            days = self.days_since_last_entry()
         
         if days == 0:
             return "today"
@@ -154,6 +170,27 @@ class Reading(models.Model):
             return True
 
         return False
+
+    def get_metadata(self):
+        current_page = self.current_page()
+        total_pages = self.total_pages()
+        percentage = self.percentage(current_page, total_pages)
+        stale_period = self.get_stale_period()
+        latest_entry = self.entries.first() if self.entries.count() > 0 else None
+        days_since_last_entry = self.days_since_last_entry(latest_entry)
+        days_since_last_entry_label = self.days_since_last_entry_label(days_since_last_entry)
+        pages_left = self.pages_left(current_page, total_pages)
+
+        return {
+            'current_page': current_page,
+            'total_pages': total_pages,
+            'percentage': percentage,
+            'stale_period': stale_period,
+            'latest_entry': latest_entry,
+            'days_since_last_entry': days_since_last_entry,
+            'days_since_last_entry_label': days_since_last_entry_label,
+            'pages_left': pages_left,
+        }
 
     def to_dict(self):
         try:

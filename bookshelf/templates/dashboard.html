@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% load humanize %}
+{% load strip_time %}
 
 {% block main %}
 
@@ -22,7 +23,63 @@
 <div class="folder">
 	<ul class="booklist">
 	{% for reading in readings %}
-		{% include '_reading.html' %}
+		<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="reading container{% if not reading.finished_date and reading.metadata.get_stale_period != 0 and reading.metadata.days_since_last_entry > reading.metadata.get_stale_period %} stale{% endif %}">
+			{% if not reading.finished_date %}
+			<div class="entry">
+				<section class="page_number">{% if reading.metadata.latest_entry %}{{ reading.metadata.latest_entry.page_number }}{% else %}—{% endif %}</section>
+				<section class="sub">
+				{% if reading.goal_date %}
+					<span class="left">Read to page <span class="pages">{{ reading.read_to_page_for_goal }}</span></span>
+					<span class="label">(pages per day: <span class="total" >{{ reading.pages_per_day_for_goal }})</span></span>
+				{% else %}
+					<span class="left"><span class="pages">{{ reading.metadata.pages_left }}</span> to go</span>
+					<span class="label">(end: <span class="total" data-end-page="{{ reading.end_page }}">{{ reading.end_page }})</span></span>
+				{% endif %}
+				</section>
+			</div>
+			{% endif %}
+
+			<a class="title" href="{% url 'book' reading.book.slug reading.id %}">
+				<span class="label title">{{ reading.book.title }}</span>
+				{% for t in reading.tags.all %}<span class="tag tag-{{ t.slug }}" style="background: {{ t.color }};"></span>{% endfor %}
+				{% if reading.book.author %}{% if title == 'History' or results %}<span class="author">{{ reading.book.author }}</span>{% endif %}{% endif %}
+			</a>
+
+			<a class="metadata" href="{% url 'book' reading.book.slug reading.id %}">
+				{% if not reading.finished_date %}
+				<span class="percentage">
+					<span class="bar" style="width: {{ reading.metadata.percentage }}%;"></span>
+				</span>
+				{% endif %}
+
+				<span class="info">
+					{% if reading.finished_date %}
+						{{ reading.metadata.total_pages }} pages,
+						finished {{ reading.finished_date|date:"F j, Y" }}
+						({% if reading.finished_date == reading.started_date %}1 day{% else %}{{ reading.started_date|timesince:reading.finished_date|strip_time:False }}{% endif %})
+					{% else %}
+					<span class="num">{{ reading.metadata.percentage }}</span><span class="percent-sign">%</span><span class="last-read"> — {{ reading.metadata.days_since_last_entry_label }}</span>
+					{% endif %}
+				</span>
+			</a>
+
+			<form class="add-entry">
+				<header>
+					<h2>Page: <input id="entry-box" type="text" pattern="\d*" value="" maxlength="4" autofocus> of <span class="end-page">{{ reading.end_page }}</span></h2>
+
+					<a class="cancel-link">Cancel</a>
+				</header>
+
+				<div class="group comment">
+					<label>Comment</label>
+					<textarea id="comment"></textarea>
+				</div>
+
+				<div class="group save">
+					<input type="submit" class="button" value="Add Entry" />
+				</div>
+			</form>
+		</li>
 	{% endfor %}
 	</ul>
 </div>

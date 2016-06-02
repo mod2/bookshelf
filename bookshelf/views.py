@@ -18,7 +18,7 @@ import json
 @login_required
 def dashboard(request):
     def active_readings():
-        readings = Reading.objects.filter(owner=request.user, status='active')
+        readings = Reading.objects.filter(owner=request.user, status='active').select_related('book')
         total = readings.count()
 
         # Sort by pages left (books with fewer pages left come first)
@@ -29,10 +29,14 @@ def dashboard(request):
 
         # Now sort stale first
         readings = sorted(readings, key=lambda k: 1 - k.stale())
-
+    
         return readings, total
 
     readings, total = active_readings()
+
+    # Add metadata
+    for reading in readings:
+        reading.metadata = reading.get_metadata()
 
     # Get this month's stats
     current_tz = timezone.get_current_timezone()
