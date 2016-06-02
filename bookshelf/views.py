@@ -48,9 +48,16 @@ def dashboard(request):
     month_data = get_stats_for_range(request, month_beginning, month_end)
     month_data['label'] = "{} {}".format(calendar.month_abbr[month], year)
 
+    # Get today's stats
+    day = now.day
+    day_beginning = datetime(year, month, day, 0, 0, tzinfo=current_tz)
+    day_end = datetime(year, month, day, 23, 59, tzinfo=current_tz)
+    day_data = get_stats_for_range(request, day_beginning, day_end)
+
     return render_to_response('dashboard.html', {'readings': readings,
                                                  'title': 'Dashboard',
                                                  'month': month_data,
+                                                 'day': day_data,
                                                  'total': total,
                                                  'request': request })
 
@@ -319,7 +326,7 @@ def stats(request):
         year_beginning = datetime(y, 1, 1, tzinfo=current_tz)
         year_end = datetime(y, 12, 31, 23, 59, tzinfo=current_tz)
 
-        year = get_stats_for_range(request, year_beginning, year_end)
+        year = get_stats_for_range(request, year_beginning, year_end, get_titles=True)
         year['label'] = y
 
         years.append(year)
@@ -342,7 +349,7 @@ def stats(request):
             month_beginning = datetime(y, m, 1, tzinfo=current_tz)
             month_end = datetime(y, m, calendar.monthrange(y, m)[1], 23, 59, tzinfo=current_tz)
 
-            month = get_stats_for_range(request, month_beginning, month_end)
+            month = get_stats_for_range(request, month_beginning, month_end, get_titles=True)
 
             month['label'] = "{} {}".format(month_name[m - 1], y)
 

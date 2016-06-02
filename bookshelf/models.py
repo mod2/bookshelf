@@ -181,7 +181,7 @@ class Reading(models.Model):
         days_since_last_entry_label = self.days_since_last_entry_label(days_since_last_entry)
         pages_left = self.pages_left(current_page, total_pages)
 
-        return {
+        response = {
             'current_page': current_page,
             'total_pages': total_pages,
             'percentage': percentage,
@@ -191,6 +191,8 @@ class Reading(models.Model):
             'days_since_last_entry_label': days_since_last_entry_label,
             'pages_left': pages_left,
         }
+
+        return response
 
     def to_dict(self):
         try:

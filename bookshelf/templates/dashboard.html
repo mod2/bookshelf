@@ -4,18 +4,23 @@
 
 {% block main %}
 
-{% if month %}
+{% if month or day %}
 <ul class="stats container dashboard">
 	<li>
-		<span class="label">{{ month.label }}</span>
-		<span class="group">
-			<span class="pages"><b>{{ month.pages|intcomma }}</b> pages</span>
-			<span class="finished" title="{{ month.finished_titles }}"><b>{{ month.finished }}</b> finished</span>
-		</span>
-		<span class="group">
-			<span class="started" title="{{ month.started_titles }}"><b>{{ month.started }}</b> started</span>
-			<span class="abandoned" title="{{ month.abandoned_titles }}"><b>{{ month.abandoned }}</b> abandoned ({{ month.abandoned_percentage|floatformat:0 }}%)</span>
-		</span>
+		<div>
+			<span class="label">{{ month.label }}</span>
+			<span class="group">
+				<span class="pages"><b>{{ month.pages|intcomma }}</b> pages</span>
+				<span class="finished"><b>{{ month.finished }}</b> finished</span>
+			</span>
+		</div>
+
+		<div>
+			<span class="label">Today</span>
+			<span class="group">
+				<span class="pages"><b>{{ day.pages|intcomma }}</b> pages</span>
+			</span>
+		</div>
 	</li>
 </ul>
 {% endif %}
@@ -23,7 +28,7 @@
 <div class="folder">
 	<ul class="booklist">
 	{% for reading in readings %}
-		<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="reading container{% if not reading.finished_date and reading.metadata.get_stale_period != 0 and reading.metadata.days_since_last_entry > reading.metadata.get_stale_period %} stale{% endif %}">
+	<li data-reading-id="{{ reading.id }}" data-book-slug="{{ reading.book.slug }}" class="reading container{% if not reading.finished_date and reading.metadata.stale_period != 0 and reading.metadata.days_since_last_entry > reading.metadata.stale_period %} stale{% endif %}">
 			{% if not reading.finished_date %}
 			<div class="entry">
 				<section class="page_number">{% if reading.metadata.latest_entry %}{{ reading.metadata.latest_entry.page_number }}{% else %}—{% endif %}</section>
