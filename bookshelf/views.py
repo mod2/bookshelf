@@ -286,6 +286,10 @@ def search(request):
             | Q(book__author__contains=query)
         ).order_by('book__title')
 
+    # Add metadata
+    for reading in results:
+        reading.metadata = reading.get_metadata()
+
     return render_to_response('results.html', {'total': total,
                                                'title': '{} — Search'.format(query),
                                                'results': results,
@@ -297,6 +301,12 @@ def history(request):
     total = Reading.objects.filter(owner=request.user, status='active').count()
     finished = Reading.objects.filter(owner=request.user, status='finished').order_by('-finished_date')
     abandoned = Reading.objects.filter(owner=request.user, status='abandoned').order_by('-started_date')
+
+    # Add metadata
+    for reading in finished:
+        reading.metadata = reading.get_metadata()
+    for reading in abandoned:
+        reading.metadata = reading.get_metadata()
 
     return render_to_response('history.html', {'total': total,
                                                'title': 'History',

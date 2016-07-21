@@ -1285,6 +1285,11 @@ ul.stats.dashboard li > div + div {
 	ul.booklist li .info {
 		font-size: .7em;
 		line-height: 1.1em;
+		text-align: right;
+	}
+
+	ul.booklist li .percentage + .info {
+		text-align: left;
 	}
 
 	ul.booklist li .percentage {
