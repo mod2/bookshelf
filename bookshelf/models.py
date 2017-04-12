@@ -239,12 +239,6 @@ class Entry(models.Model):
     def __str__(self):
         return "{} on {}".format(self.page_number, self.date)
 
-    def calc_pages(self):
-        if self.reading.ebook:
-            return round(self.num_pages * 0.875)
-        else:
-            return self.num_pages
-
     def save(self, *args, **kwargs):
         if not self.date:
             self.date = datetime.datetime.now()
