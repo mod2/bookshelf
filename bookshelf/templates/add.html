@@ -20,6 +20,11 @@
 	</div>
 
 	<div class="group">
+		<label>Ebook?</label>
+		<input type="checkbox" name="ebook" {% if reading.ebook %}checked{% endif %}/>
+	</div>
+
+	<div class="group">
 		<label>Tags</label>
 		<select id="tags" name="tags" multiple="multiple">
 			{% for t in tags %}

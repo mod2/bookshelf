@@ -167,6 +167,7 @@ def add_book(request):
             author = request.POST.get('author', '')
             num_pages = int(request.POST.get('num_pages', 0))
             starting_page = int(request.POST.get('starting_page', 1))
+            ebook = request.POST.get('ebook', False)
             tags = request.POST.getlist('tags[]')
 
             if title != '':
@@ -185,6 +186,8 @@ def add_book(request):
                 reading.started_date = datetime.now()
                 reading.start_page = starting_page
                 reading.end_page = num_pages
+                if ebook:
+                    reading.ebook = True
                 reading.save()
 
                 # Add tags
@@ -227,6 +230,7 @@ def edit_book(request, reading_id):
             author = request.POST.get('author', '')
             num_pages = int(request.POST.get('num_pages', 0))
             starting_page = int(request.POST.get('starting_page', 1))
+            ebook = request.POST.get('ebook', False)
             tags = request.POST.getlist('tags[]')
 
             # Update the book
@@ -240,6 +244,10 @@ def edit_book(request, reading_id):
             # Update the reading
             reading.start_page = starting_page
             reading.end_page = num_pages
+            if ebook == "true":
+                reading.ebook = True
+            else:
+                reading.ebook = False
 
             reading.tags.clear()
             # Add tags

@@ -13,10 +13,17 @@ def get_stats_for_range(request, beginning, end, get_titles=False):
     end_utc = d_tz.astimezone(utc)
 
     # Get entries for the range
-    entries = Entry.objects.filter(owner=request.user, date__gte=beginning_utc, date__lte=end_utc).values('num_pages')
+    base_entries = Entry.objects.filter(owner=request.user, date__gte=beginning_utc, date__lte=end_utc)
+    entries = base_entries.filter(reading__ebook=False).values('num_pages')
+    ebook_entries = base_entries.filter(reading__ebook=True).values('num_pages')
 
     # Pages read is just a sum of the entry amounts
     pages = sum(e['num_pages'] for e in entries)
+
+    # Ebook pages read
+    ebook_pages = sum(e['num_pages'] for e in ebook_entries)
+    ebook_pages = round(ebook_pages * 0.875) # Ebooks count for less
+    pages += ebook_pages
 
     # Get books started/finished/abandoned during this range
     finished = Reading.objects.filter(owner=request.user, finished_date__gte=beginning_utc, finished_date__lte=end_utc, status='finished')

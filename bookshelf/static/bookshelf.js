@@ -153,6 +153,7 @@ $(document).ready(function() {
 			author: $(this).find("input[name=author]").val().trim(),
 			num_pages: parseInt($(this).find("input[name=num_pages]").val().trim()),
 			starting_page: starting_page,
+            ebook: $(this).find("input[name=ebook]")[0].checked,
 			tags: tags,
 		};
 

@@ -78,7 +78,7 @@
 				</div>
 
 				<div class="metadata">
-					<div class="page-number">p.&thinsp;{{ entry.page_number }} <span>({{ entry.num_pages }} pages)</span></div>
+                    <div class="page-number">p.&thinsp;{{ entry.page_number }} <span>({{ entry.num_pages }}{% if entry.reading.ebook %} ebook{% endif %} pages{% if entry.reading.ebook %}, {{ entry.calc_pages }} pages{% endif %})</span></div>
 					{% if entry.comment %}
 						<div class="comment">{{ entry.comment }}</div>
 					{% endif %}

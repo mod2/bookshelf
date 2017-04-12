@@ -49,6 +49,8 @@ class Reading(models.Model):
     start_page = models.PositiveSmallIntegerField(default=1)
     end_page = models.PositiveSmallIntegerField(null=True, blank=True)
 
+    ebook = models.BooleanField(default=False)
+
     order = models.PositiveSmallIntegerField(default=100)
 
     stale_period = models.PositiveSmallIntegerField(default=0)
@@ -236,6 +238,12 @@ class Entry(models.Model):
 
     def __str__(self):
         return "{} on {}".format(self.page_number, self.date)
+
+    def calc_pages(self):
+        if self.reading.ebook:
+            return round(self.num_pages * 0.875)
+        else:
+            return self.num_pages
 
     def save(self, *args, **kwargs):
         if not self.date:
