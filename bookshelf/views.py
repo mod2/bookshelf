@@ -170,6 +170,9 @@ def add_book(request):
             ebook = request.POST.get('ebook', False)
             tags = request.POST.getlist('tags[]')
 
+            if ebook == 'false':
+                ebook = False
+
             if title != '':
                 # Create the book
                 book = Book()
