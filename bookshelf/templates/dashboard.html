@@ -26,7 +26,7 @@
 			<span class="label">Last 7 days</span>
 			<span class="group">
 				{% for tag in stats %}
-				<span class="weekpages"><b>{{ tag.pages|intcomma }}</b> {{ tag.label }}</span>
+				<span class="weekpages"><b>{{ tag.percentage|floatformat:0 }}%</b> {{ tag.label }}</span>
 				{% endfor %}
 			</span>
 		</div>

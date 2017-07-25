@@ -64,6 +64,7 @@ def get_stats_for_week(request):
     ).prefetch_related('reading').values('num_pages', 'reading__tags')
 
     tags = {}
+    total = 0
 
     # Sum up the pages read for each tag
     for e in entries:
@@ -71,6 +72,7 @@ def get_stats_for_week(request):
         if t not in tags:
             tags[t] = 0
         tags[t] += e['num_pages']
+        total += e['num_pages']
 
     # Now put it all together
     response = []
@@ -78,7 +80,7 @@ def get_stats_for_week(request):
         tag = Tag.objects.get(id=t)
         response.append({
             'label': tag.slug,
-            'pages': tags[t],
+            'percentage': (tags[t] / total * 100),
         })
 
     # Sort it
