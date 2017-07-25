@@ -204,6 +204,12 @@ def add_book(request):
 
                 reading.save()
 
+                # Add the first entry
+                entry = Entry()
+                entry.reading = reading
+                entry.page_number = starting_page
+                entry.save()
+
                 # Return the book and reading IDs
                 response = { 'status': 200, 'reading_id': reading.id, 'book_id': book.id }
             else:
