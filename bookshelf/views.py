@@ -11,7 +11,10 @@ from datetime import datetime, timedelta, time
 import calendar
 
 from .models import Book, Reading, Entry, Tag
-from .utils import get_stats_for_range
+from .utils import (
+    get_stats_for_range,
+    get_stats_for_week,
+)
 
 import json
 
@@ -54,10 +57,14 @@ def dashboard(request):
     day_end = datetime(year, month, day, 23, 59, tzinfo=current_tz)
     day_data = get_stats_for_range(request, day_beginning, day_end)
 
+    # Get weekly stats
+    stats = get_stats_for_week(request)
+
     return render_to_response('dashboard.html', {'readings': readings,
                                                  'title': 'Dashboard',
                                                  'month': month_data,
                                                  'day': day_data,
+                                                 'stats': stats,
                                                  'total': total,
                                                  'request': request })
 

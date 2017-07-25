@@ -1,8 +1,8 @@
 from django.utils import timezone
 from django.utils.timezone import utc, make_aware
-from datetime import datetime
+from datetime import datetime, timedelta
 
-from bookshelf.models import Reading, Entry
+from bookshelf.models import Reading, Entry, Tag
 
 def get_stats_for_range(request, beginning, end, get_titles=False):
     # Convert to UTC
@@ -41,5 +41,47 @@ def get_stats_for_range(request, beginning, end, get_titles=False):
         response['finished_titles'] = '; '.join([b.book.title for b in finished.order_by('finished_date')])
         response['started_titles'] = '; '.join([b.book.title for b in started.order_by('started_date')])
         response['abandoned_titles'] = '; '.join([b.book.title for b in abandoned.order_by('started_date')])
+
+    return response
+
+def get_stats_for_week(request):
+    # Last 7 days
+    end = timezone.now()
+    beginning = end - timedelta(7)
+
+    # Convert to UTC
+    tz = timezone.get_current_timezone()
+    d_tz = tz.normalize(beginning)
+    beginning_utc = d_tz.astimezone(utc)
+    d_tz = tz.normalize(end)
+    end_utc = d_tz.astimezone(utc)
+
+    # Get entries for the range
+    entries = Entry.objects.filter(
+        owner=request.user,
+        date__gte=beginning_utc,
+        date__lte=end_utc,
+    ).prefetch_related('reading').values('num_pages', 'reading__tags')
+
+    tags = {}
+
+    # Sum up the pages read for each tag
+    for e in entries:
+        t = e['reading__tags']
+        if t not in tags:
+            tags[t] = 0
+        tags[t] += e['num_pages']
+
+    # Now put it all together
+    response = []
+    for t in tags:
+        tag = Tag.objects.get(id=t)
+        response.append({
+            'label': tag.slug,
+            'pages': tags[t],
+        })
+
+    # Sort it
+    response = sorted(response, key=lambda k: k['label'])
 
     return response

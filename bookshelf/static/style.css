@@ -1181,7 +1181,7 @@ ul.stats li span.group b {
 }
 
 ul.stats li .pages {
-	width: 95px;
+	min-width: 95px;
 }
 
 ul.stats li .started {
@@ -1221,6 +1221,14 @@ ul.stats.dashboard li > div + div {
 	margin-top: 5px;
 }
 
+ul.stats.dashboard .weekpages {
+	margin-right: 10px;
+}
+
+ul.stats.dashboard div.week {
+	margin: 0;
+	margin-top: 5px;
+}
 
 /* Media queries */
 @media screen and (min-width: 1100px) {
@@ -1337,5 +1345,13 @@ ul.stats.dashboard li > div + div {
 	.reading .add-entry {
 		flex: 100%;
 		order: 5;
+	}
+
+	ul.stats.dashboard div.week span.label {
+		width: 85px;
+	}
+
+	ul.stats.dashboard div.week .group {
+		margin-left: 25px;
 	}
 }

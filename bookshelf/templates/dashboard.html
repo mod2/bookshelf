@@ -21,6 +21,15 @@
 				<span class="pages"><b>{{ day.pages|intcomma }}</b> pages</span>
 			</span>
 		</div>
+
+		<div class="week">
+			<span class="label">Last 7 days</span>
+			<span class="group">
+				{% for tag in stats %}
+				<span class="weekpages"><b>{{ tag.pages|intcomma }}</b> {{ tag.label }}</span>
+				{% endfor %}
+			</span>
+		</div>
 	</li>
 </ul>
 {% endif %}
