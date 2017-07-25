@@ -301,7 +301,7 @@ def search(request):
         results = Reading.objects.filter(
             Q(book__title__contains=query)
             | Q(book__author__contains=query)
-        ).order_by('book__title')
+        ).order_by('-started_date', 'book__title')
 
     # Add metadata
     for reading in results:
